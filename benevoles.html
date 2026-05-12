@@ -6,7 +6,7 @@
   <title>Devenir bénévole — BIC</title>
   <meta name="description" content="Rejoignez BIC : une communauté chaleureuse, un réseau ivoirien et africain au Canada, des événements, et l'opportunité de contribuer.">
   <meta name="theme-color" content="#C8693E">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23C8693E%22/><text x=%2250%22 y=%2268%22 font-size=%2255%22 font-family=%22serif%22 text-anchor=%22middle%22 fill=%22%23FAF6F0%22 font-weight=%22600%22>B</text></svg>">
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,27 +14,7 @@
 </head>
 <body>
 
-  <header class="nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="brand">
-        <span class="brand-mark">B</span>
-        <span class="brand-text">BIC <small>Bénévoles Ivoiriens du Canada</small></span>
-      </a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="a-propos.html">À propos</a></li>
-          <li><a href="comites.html">Comités</a></li>
-          <li><a href="evenements.html">Événements</a></li>
-          <li><a href="benevoles.html" class="active">Devenir bénévole</a></li>
-          <li><a href="nous-suivre.html">Nous suivre</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-      <a class="nav-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header" target="_blank" rel="noopener">Rejoindre BIC</a>
-      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false"><span></span></button>
-    </div>
-  </header>
+  <bic-nav lang="fr" active="volunteer"></bic-nav>
 
   <section class="page-header">
     <div class="container">
@@ -87,9 +67,12 @@
       <div class="cta-block">
         <span class="eyebrow" style="color: rgba(250,246,240,0.85);">Comment adhérer</span>
         <h2>Quelques minutes <span class="italic-accent">suffisent</span>.</h2>
-        <p>L'adhésion à BIC se fait en ligne en quelques minutes. Remplissez simplement le formulaire ci-dessous et notre équipe reviendra vers vous rapidement.</p>
-        <a class="btn btn-primary btn-arrow" href="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header" target="_blank" rel="noopener">Formulaire d'adhésion</a>
-        <p style="margin-top: 2rem; font-size: 0.95rem; opacity: 0.85;"><em>La cotisation annuelle est la principale source de revenus de BIC. Elle contribue directement à financer nos activités et à maintenir notre communauté active.</em></p>
+        <p>L'adhésion à BIC se fait en ligne en quelques minutes. Remplissez le formulaire ci-dessous, ou soutenez-nous directement par un don.</p>
+        <div class="btn-group">
+          <a class="btn btn-primary btn-arrow" href="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header" target="_blank" rel="noopener">Formulaire d'adhésion</a>
+          <a class="btn btn-donate" href="https://www.zeffy.com/fr-CA/ticketing/cotisation-annuelle-2026-2027-benevoles-ivoiriens-du-canada-bic" target="_blank" rel="noopener">Faire un don</a>
+        </div>
+        <p style="margin-top: 2rem; font-size: 0.95rem; opacity: 0.85;"><em>La cotisation annuelle et les dons sont les principales sources de revenus de BIC. Ils contribuent directement à financer nos activités et à maintenir notre communauté active.</em></p>
       </div>
     </div>
   </section>
@@ -102,49 +85,8 @@
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="brand">
-            <span class="brand-mark">B</span>
-            <span class="brand-text" style="color: var(--cream);">BIC <small style="color: rgba(250,246,240,0.6);">Bénévoles Ivoiriens du Canada</small></span>
-          </a>
-          <p>Ensemble, construisons l'avenir. Une communauté ivoirienne au Canada.</p>
-        </div>
-        <div>
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="a-propos.html">À propos</a></li>
-            <li><a href="comites.html">Nos comités</a></li>
-            <li><a href="evenements.html">Événements</a></li>
-            <li><a href="benevoles.html">Devenir bénévole</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Communauté</h4>
-          <ul>
-            <li><a href="nous-suivre.html">Nous suivre</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header" target="_blank" rel="noopener">Adhésion</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Réseaux</h4>
-          <ul>
-            <li><a href="https://www.facebook.com/p/B%C3%A9n%C3%A9voles-Ivoiriens-du-Canada-BIC-100091865238462/" target="_blank" rel="noopener">Facebook</a></li>
-            <li><a href="https://www.instagram.com/benevolesivoirienscanada/" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="https://www.tiktok.com/@benevolesivoirienscanada" target="_blank" rel="noopener">TikTok</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© <span data-year>2026</span> Bénévoles Ivoiriens du Canada. Tous droits réservés.</span>
-        <span>Montréal · Gatineau · Québec</span>
-      </div>
-    </div>
-  </footer>
+  <bic-footer lang="fr"></bic-footer>
 
-  <script src="assets/script.js"></script>
+  <script src="assets/components.js" defer></script>
 </body>
 </html>
