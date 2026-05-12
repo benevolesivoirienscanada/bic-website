@@ -60,7 +60,7 @@ git push -u origin main
 ### Étape 3 — Brancher votre nom de domaine
 
 1. Dans le projet Pages → onglet **Custom domains** → **Set up a custom domain**.
-2. Entrez votre domaine (ex: `bic-canada.org`).
+2. Entrez votre domaine (ex: `benevolesivoirienscanada.com`).
 3. Si le domaine est déjà géré par Cloudflare, le DNS se configure automatiquement.
    Sinon, Cloudflare vous donnera les enregistrements DNS à ajouter chez votre registrar.
 
