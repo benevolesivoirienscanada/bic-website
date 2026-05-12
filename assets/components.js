@@ -81,7 +81,7 @@ const T = {
     },
   },
   en: {
-    brandLine: 'Ivorian Volunteers of Canada',
+    brandLine: 'Bénévoles Ivoiriens du Canada',
     logoAlt: 'BIC logo',
     join: 'Join BIC',
     openMenu: 'Open menu',
