@@ -74,8 +74,7 @@ git push -u origin main
 
 Recherchez `⚠ À COMPLÉTER` dans le code pour repérer tous les emplacements. En résumé :
 
-- **`contact.html`** — remplacer `contact@bic.example` par la vraie adresse courriel
-- **`nous-suivre.html`** — remplacer les `href="#"` par les vrais liens Facebook, Instagram, TikTok
+- **`contact.html`** — remplacer `contact@bic.example` par la bonne adresse courriel
 - **`a-propos.html`** — remplacer `[Nom à compléter]` par les noms des membres du Conseil d'administration
 - **Footers de toutes les pages** — mettre à jour les liens des réseaux sociaux (les `href="#"`)
 - **Optionnel** — `contact.html` : remplacer le bloc placeholder par une `<iframe>` Google Forms de contact
