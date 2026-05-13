@@ -14,11 +14,11 @@ bic-website/
 ├── comites.html        ← Nos 5 comités
 ├── evenements.html     ← Événements à venir + archives
 ├── benevoles.html      ← Devenir bénévole
-├── nous-suivre.html    ← Réseaux sociaux
 ├── contact.html        ← Coordonnées + formulaire
 ├── assets/
 │   ├── styles.css      ← Toute la mise en forme
-│   └── script.js       ← Menu mobile + petites animations
+│   └── icon.css        ← icones
+│   └── components.js   ← Tout le header, nav & footer
 ├── README.md           ← Ce fichier
 └── .gitignore
 ```
