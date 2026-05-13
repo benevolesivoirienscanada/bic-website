@@ -306,14 +306,14 @@ nav {
 
   /* Réduction du texte BIC pour que ça tienne sur mobile */
   .brand-text {
-    font-size: 0.85rem; /* ajustez si nécessaire */
+    font-size: 0.95rem; /* ajustez si nécessaire */
   }
 }
 
 /* Sur très petits écrans, on masque la baseline du logo pour gagner de la place */
 @media (max-width: 480px) {
   .nav-cta {
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.85rem;
     font-size: 0.72rem;
   }
   .brand-logo {
