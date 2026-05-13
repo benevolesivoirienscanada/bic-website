@@ -163,7 +163,7 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
 .brand-text {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   letter-spacing: -0.02em;
 }
 .brand-text small {
