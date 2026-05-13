@@ -960,7 +960,7 @@ nav {
 
 /* Le bloc principal — le courriel comme star */
 .contact-hero {
-  max-width: 80%;
+  max-width: 720px;
   margin: 0 auto;
   text-align: center;
   background: var(--navy);
