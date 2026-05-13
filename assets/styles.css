@@ -303,6 +303,7 @@ nav {
     max-height: calc(100vh - 72px);
     overflow-y: auto;
   }
+}
 
 /* Sur très petits écrans, on masque la baseline du logo pour gagner de la place */
 @media (max-width: 480px) {
