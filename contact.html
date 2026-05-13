@@ -47,34 +47,40 @@
 
   <!-- ============ AUTRES VOIES DE CONTACT ============ -->
   <section style="padding-top: 0;">
-    <div class="container">
-      <div class="section-header centered">
-        <span class="eyebrow">Réseaux sociaux</span>
-        <h2>D'autres façons de <span class="italic-accent" style="color: var(--teal-deep);">nous joindre</span>.</h2>
-      </div>
-
-      <div class="socials-grid">
-        <a href="${SOCIAL.facebook}" target="_blank" rel="noopener" class="social-card">
-          <div class="social-icon"><i class="icon icon-facebook icon-2xl" aria-hidden="true"></i></div>
-          <div class="social-name">Facebook</div>
-          <div class="social-link">Bénévoles Ivoiriens du Canada →</div>
-        </a>
-
-        <a href="${SOCIAL.instagram}" target="_blank" rel="noopener" class="social-card">
-          <div class="social-icon"><i class="icon icon-instagram icon-2xl" aria-hidden="true"></i></div>
-          <div class="social-name">Instagram</div>
-          <div class="social-link">@benevolesivoirienscanada →</div>
-        </a>
-
-        <a href="${SOCIAL.tiktok" target="_blank" rel="noopener" class="social-card">
-          <div class="social-icon"><i class="icon icon-music icon-2xl" aria-hidden="true"></i></div>
-          <div class="social-name">TikTok</div>
-          <div class="social-link">@benevolesivoirienscanada →</div>
-        </a>
-      </div>
+  <div class="container">
+    <div class="section-header centered">
+      <span class="eyebrow">Réseaux sociaux</span>
+      <h2>D'autres façons de <span class="italic-accent" style="color: var(--teal-deep);">nous joindre</span>.</h2>
     </div>
-  </section>
 
+    <div class="socials-grid" id="socials-grid">
+      <!-- Links will be inserted here by JS -->
+    </div>
+  </div>
+</section>
+
+<script>
+  const grid = document.getElementById('socials-grid');
+  grid.innerHTML = `
+    <a href="${SOCIAL.facebook}" target="_blank" rel="noopener" class="social-card">
+      <div class="social-icon"><i class="icon icon-facebook icon-xl" aria-hidden="true"></i></div>
+      <div class="social-name">Facebook</div>
+      <div class="social-link">Bénévoles Ivoiriens du Canada →</div>
+    </a>
+
+    <a href="${SOCIAL.instagram}" target="_blank" rel="noopener" class="social-card">
+      <div class="social-icon"><i class="icon icon-instagram icon-xl" aria-hidden="true"></i></div>
+      <div class="social-name">Instagram</div>
+      <div class="social-link">@benevolesivoirienscanada →</div>
+    </a>
+
+    <a href="${SOCIAL.tiktok}" target="_blank" rel="noopener" class="social-card">
+      <div class="social-icon"><i class="icon icon-music icon-xl" aria-hidden="true"></i></div>
+      <div class="social-name">TikTok</div>
+      <div class="social-link">@benevolesivoirienscanada →</div>
+    </a>
+  `;
+</script>
   <bic-footer lang="fr"></bic-footer>
 
   <script src="assets/components.js" defer></script>
