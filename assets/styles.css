@@ -335,6 +335,11 @@ nav {
   display: block;
 }
 
+.footer .brand-text,
+.footer .footer-brand .brand-text.multi-line {
+  color: var(--cream) !important;
+}
+
 /* ---------- Boutons ----------------------------------------------------- */
 .btn {
   display: inline-flex;
