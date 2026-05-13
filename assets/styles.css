@@ -605,25 +605,6 @@ nav {
   background: var(--orange);
 }
 
-.committee-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-.committee-meta .stat-small strong {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  color: var(--navy);
-  display: block;
-}
-.committee-meta .stat-small span {
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
 /* ---------- Valeurs ----------------------------------------------------- */
 .values-grid {
   display: grid;
