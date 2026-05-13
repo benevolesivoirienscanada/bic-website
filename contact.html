@@ -15,8 +15,10 @@
 </head>
 <body>
 
+  <!-- NAVIGATION -->
   <bic-nav lang="fr" active="contact"></bic-nav>
 
+  <!-- PAGE HEADER -->
   <section class="page-header">
     <div class="container">
       <span class="eyebrow">Contact</span>
@@ -25,7 +27,7 @@
     </div>
   </section>
 
-  <!-- ============ COURRIEL : LE CŒUR DE LA PAGE ============ -->
+  <!-- CONTACT EMAIL -->
   <section class="contact-write" style="padding-top: 0;">
     <div class="container">
       <div class="contact-write-grid">
@@ -44,7 +46,7 @@
     </div>
   </section>
 
-  <!-- ============ AUTRES VOIES DE CONTACT ============ -->
+  <!-- SOCIAL MEDIA CARDS -->
   <section style="padding-top: 0;">
     <div class="container">
       <div class="section-header centered">
@@ -58,48 +60,35 @@
     </div>
   </section>
 
-<script>
-  const grid = document.getElementById('socials-grid');
-  grid.innerHTML = `
-    <a href="${SOCIAL.facebook}" target="_blank" rel="noopener" class="social-card">
-      <div class="social-icon"><i class="icon icon-facebook icon-xl" aria-hidden="true"></i></div>
-      <div class="social-name">Facebook</div>
-      <div class="social-link">Bénévoles Ivoiriens du Canada →</div>
-    </a>
-
-    <a href="${SOCIAL.instagram}" target="_blank" rel="noopener" class="social-card">
-      <div class="social-icon"><i class="icon icon-instagram icon-xl" aria-hidden="true"></i></div>
-      <div class="social-name">Instagram</div>
-      <div class="social-link">@benevolesivoirienscanada →</div>
-    </a>
-
-    <a href="${SOCIAL.tiktok}" target="_blank" rel="noopener" class="social-card">
-      <div class="social-icon"><i class="icon icon-music icon-xl" aria-hidden="true"></i></div>
-      <div class="social-name">TikTok</div>
-      <div class="social-link">@benevolesivoirienscanada →</div>
-    </a>
-  `;
-</script>
+  <!-- FOOTER -->
   <bic-footer lang="fr"></bic-footer>
 
+  <!-- COMPONENTS JS -->
   <script src="assets/components.js" defer></script>
+
+  <!-- SOCIALS GENERATION -->
   <script>
-    const grid = document.getElementById('socials-grid');
-    const SOCIAL_INFO = {
-      facebook: { icon: 'facebook', display: 'Facebook', handle: 'Bénévoles Ivoiriens du Canada' },
-      instagram: { icon: 'instagram', display: 'Instagram', handle: '@benevolesivoirienscanada' },
-      tiktok: { icon: 'music', display: 'TikTok', handle: '@benevolesivoirienscanada' }
-    };
-    grid.innerHTML = Object.entries(SOCIAL).map(([key, url]) => {
-      const info = SOCIAL_INFO[key] || { icon: 'globe', display: key, handle: '' };
-      return `
-        <a href="${url}" target="_blank" rel="noopener" class="social-card">
-          <div class="social-icon"><i class="icon icon-${info.icon} icon-xl" aria-hidden="true"></i></div>
-          <div class="social-name">${info.display}</div>
-          <div class="social-link">${info.handle} →</div>
-        </a>
-      `;
-    }).join('');
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('socials-grid');
+
+      const SOCIAL_INFO = {
+        facebook: { icon: 'facebook', display: 'Facebook', handle: 'Bénévoles Ivoiriens du Canada' },
+        instagram: { icon: 'instagram', display: 'Instagram', handle: '@benevolesivoirienscanada' },
+        tiktok: { icon: 'music', display: 'TikTok', handle: '@benevolesivoirienscanada' }
+      };
+
+      grid.innerHTML = Object.entries(SOCIAL).map(([key, url]) => {
+        const info = SOCIAL_INFO[key] || { icon: 'globe', display: key, handle: '' };
+        return `
+          <a href="${url}" target="_blank" rel="noopener" class="social-card">
+            <div class="social-icon"><i class="icon icon-${info.icon} icon-xl" aria-hidden="true"></i></div>
+            <div class="social-name">${info.display}</div>
+            <div class="social-link">${info.handle} →</div>
+          </a>
+        `;
+      }).join('');
+    });
   </script>
+
 </body>
 </html>
