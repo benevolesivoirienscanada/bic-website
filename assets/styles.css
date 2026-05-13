@@ -1105,3 +1105,35 @@ nav {
 .contact-region span {
   margin-right: 0.4rem;
 }
+
+/* ==========================================================================
+   ICÔNES — ajustements pour les containers existants
+   ==========================================================================
+   Quand un emoji est remplacé par <i class="icon">, le container doit définir
+   une couleur car les icônes utilisent currentColor. */
+
+/* Comités : couleur teal pour les icônes 2 et 4 (variation déjà sur fond) */
+.committee-icon .icon { color: var(--orange); }
+.committee:nth-child(2n) .committee-icon .icon { color: var(--teal-deep); }
+.committee:nth-child(3n) .committee-icon .icon { color: var(--orange-deep); }
+
+/* Valeurs (À propos / Bénévoles / Nous suivre) : orange par défaut */
+.value-emoji .icon { color: var(--orange); }
+/* Variations cycliques pour une grille visuellement plus riche */
+.value:nth-child(2n) .value-emoji .icon { color: var(--teal-deep); }
+.value:nth-child(3n) .value-emoji .icon { color: var(--navy); }
+
+/* Réseaux sociaux (page Nous suivre) */
+.social-icon .icon { color: var(--orange); }
+.social-card:hover .social-icon .icon { color: var(--orange-deep); }
+
+/* Contact — options réseaux */
+.contact-option-icon .icon { color: var(--orange); }
+.contact-option:hover .contact-option-icon .icon { color: var(--orange-deep); }
+
+/* Contact — hero icon (sur fond marine) */
+.contact-hero-icon .icon { color: var(--orange-soft); }
+
+/* Région — petit marqueur */
+.contact-region .icon { color: var(--orange); vertical-align: -0.15em; margin-right: 0.4rem; }
+
