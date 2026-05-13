@@ -163,7 +163,7 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
 .brand-text {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   letter-spacing: -0.02em;
 }
 .brand-text small {
@@ -960,7 +960,7 @@ nav {
 
 /* Le bloc principal — le courriel comme star */
 .contact-hero {
-  max-width: 760px;
+  max-width: 80%;
   margin: 0 auto;
   text-align: center;
   background: var(--navy);
