@@ -731,11 +731,6 @@ nav {
   margin-bottom: 0.4rem;
   color: var(--navy);
 }
-.social-count {
-  font-size: 0.95rem;
-  color: var(--muted);
-  margin-bottom: 1rem;
-}
 .social-link {
   font-size: 0.88rem;
   font-weight: 600;
