@@ -936,62 +936,6 @@ nav {
   .nav-lang { margin-right: 0; }
 }
 
-/* ======= NAV BRAND ======= */
-header.nav .brand {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; /* space between logo and text */
-}
-
-header.nav .brand-logo {
-  flex-shrink: 0;
-}
-
-header.nav .brand-text {
-  font-weight: 700;
-  font-size: 1.25rem;
-  line-height: 1.2;
-  color: var(--cream);
-  white-space: nowrap;
-}
-
-@media (max-width: 600px) {
-  header.nav .brand-text {
-    font-size: 1rem;
-    white-space: normal;
-  }
-}
-
-/* ======= FOOTER BRAND ======= */
-.footer-brand .brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap; /* allow wrapping on mobile */
-}
-
-.footer-brand .brand-logo-footer-badge {
-  flex-shrink: 0;
-}
-
-.footer-brand .footer-brand-fullname {
-  font-weight: 700;
-  font-size: 1.5rem;
-  line-height: 1.2;
-  color: var(--cream);
-}
-
-@media (max-width: 600px) {
-  .footer-brand .footer-brand-fullname {
-    font-size: 1.2rem;
-    text-align: center;
-    width: 100%;
-  }
-  .footer-brand .brand {
-    justify-content: center;
-  }
-}
-
 /* Bouton « Faire un don » — variant teal, signature visuelle distincte */
 .btn-donate {
   background: var(--teal);
