@@ -161,7 +161,7 @@ class BicNav extends HTMLElement {
   <div class="container nav-inner">
     <a href="${PAGES.home[lang]}" class="brand">
       <img src="/assets/images/logo.png" alt="${esc(t.logoAlt)}" class="brand-logo" width="44" height="44">
-      <span class="brand-text">
+      <span class="brand-text small">
          <span>BENEVOLES</span>
          <span>IVOIRIENS</span>
          <span>DU CANADA</span>
@@ -217,7 +217,6 @@ class BicFooter extends HTMLElement {
               <span>DU CANADA</span>
            </span>
         </a>
-        <p class="footer-brand-subtitle">${esc(t.brandLine)}</p>
         <p>${esc(t.footer.tagline)}</p>
       </div>
       <div>
