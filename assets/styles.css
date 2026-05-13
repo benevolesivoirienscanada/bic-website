@@ -1017,24 +1017,14 @@ nav {
 
 .contact-write-actions {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.25rem 1.75rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
 }
-.contact-write-mailto {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.05rem;
-  color: var(--navy);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--orange);
-  padding-bottom: 2px;
-  transition: color 0.2s, border-color 0.2s;
-  word-break: break-all;
-}
-.contact-write-mailto:hover {
-  color: var(--orange);
-  border-color: var(--orange-deep);
+.contact-write-note {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0;
 }
 
 /* Côté visuel droit : un blob coloré + une icône qui flotte au-dessus */
