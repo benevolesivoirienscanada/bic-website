@@ -324,6 +324,17 @@ nav {
   }
 }
 
+.brand-text.multi-line {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+  font-size: 0.75rem;
+}
+
+.brand-text.multi-line span {
+  display: block;
+}
+
 /* ---------- Boutons ----------------------------------------------------- */
 .btn {
   display: inline-flex;
