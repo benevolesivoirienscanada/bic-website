@@ -960,12 +960,12 @@ nav {
 
 /* Le bloc principal — le courriel comme star */
 .contact-hero {
-  max-width: 640px;
+  max-width: 720px;
   margin: 0 auto;
   text-align: center;
   background: var(--navy);
   color: var(--cream);
-  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 3.5rem);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   position: relative;
@@ -996,9 +996,20 @@ nav {
 .contact-hero > * { position: relative; z-index: 1; }
 
 .contact-hero-icon {
-  font-size: 2.8rem;
-  margin-bottom: 1rem;
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: var(--orange);
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(200, 105, 62, 0.35);
+  margin: 0 auto 1.5rem;
+}
+.contact-hero-icon .icon {
+  width: 36px;
+  height: 36px;
+  color: var(--cream);
 }
 .contact-hero-title {
   color: var(--cream);
@@ -1009,7 +1020,7 @@ nav {
   color: rgba(250, 246, 240, 0.85);
   font-size: 1.05rem;
   margin-bottom: 2rem;
-  max-width: 420px;
+  max-width: 480px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1131,9 +1142,7 @@ nav {
 .contact-option-icon .icon { color: var(--orange); }
 .contact-option:hover .contact-option-icon .icon { color: var(--orange-deep); }
 
-/* Contact — hero icon (sur fond marine) */
-.contact-hero-icon .icon { color: var(--orange-soft); }
+/* Contact — hero icon : couleur définie dans la règle .contact-hero-icon .icon plus haut */
 
 /* Région — petit marqueur */
 .contact-region .icon { color: var(--orange); vertical-align: -0.15em; margin-right: 0.4rem; }
-
