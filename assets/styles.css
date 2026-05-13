@@ -838,6 +838,12 @@ nav {
   max-width: 320px;
 }
 
+.footer-brand-subtitle {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 0.9rem;
+  color: rgba(250, 246, 240, 0.65);
+}
+
 .footer-bottom {
   padding-top: 2rem;
   border-top: 1px solid rgba(250, 246, 240, 0.15);
