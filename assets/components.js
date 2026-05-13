@@ -211,11 +211,11 @@ class BicFooter extends HTMLElement {
       <div class="footer-brand">
         <a href="${PAGES.home[lang]}" class="brand">
           <span class="brand-logo-footer-badge"><img src="/assets/images/logo.png" alt="${esc(t.logoAlt)}" width="52" height="52"></span>
-          <span class="brand-text">
-              <span>BENEVOLES</span>
-              <span>IVOIRIENS</span>
-              <span>DU CANADA</span>
-           </span>
+          <span class="brand-text multi-line">
+             <span>BENEVOLES</span>
+             <span>IVOIRIENS</span>
+             <span>DU CANADA</span>
+          </span>
         </a>
         <p>${esc(t.footer.tagline)}</p>
       </div>
