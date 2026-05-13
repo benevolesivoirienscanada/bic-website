@@ -12,7 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/icons.css">
-  <script type="module" src="/assets/js/components.js"></script>
 </head>
 <body>
 
@@ -47,17 +46,17 @@
 
   <!-- ============ AUTRES VOIES DE CONTACT ============ -->
   <section style="padding-top: 0;">
-  <div class="container">
-    <div class="section-header centered">
-      <span class="eyebrow">Réseaux sociaux</span>
-      <h2>D'autres façons de <span class="italic-accent" style="color: var(--teal-deep);">nous joindre</span>.</h2>
+    <div class="container">
+      <div class="section-header centered">
+        <span class="eyebrow">Réseaux sociaux</span>
+        <h2>D'autres façons de <span class="italic-accent" style="color: var(--teal-deep);">nous joindre</span>.</h2>
+      </div>
+  
+      <div class="socials-grid" id="socials-grid">
+        <!-- Social cards will be generated here -->
+      </div>
     </div>
-
-    <div class="socials-grid" id="socials-grid">
-      <!-- Links will be inserted here by JS -->
-    </div>
-  </div>
-</section>
+  </section>
 
 <script>
   const grid = document.getElementById('socials-grid');
@@ -84,5 +83,23 @@
   <bic-footer lang="fr"></bic-footer>
 
   <script src="assets/components.js" defer></script>
+  <script>
+    const grid = document.getElementById('socials-grid');
+    const SOCIAL_INFO = {
+      facebook: { icon: 'facebook', display: 'Facebook', handle: 'Bénévoles Ivoiriens du Canada' },
+      instagram: { icon: 'instagram', display: 'Instagram', handle: '@benevolesivoirienscanada' },
+      tiktok: { icon: 'music', display: 'TikTok', handle: '@benevolesivoirienscanada' }
+    };
+    grid.innerHTML = Object.entries(SOCIAL).map(([key, url]) => {
+      const info = SOCIAL_INFO[key] || { icon: 'globe', display: key, handle: '' };
+      return `
+        <a href="${url}" target="_blank" rel="noopener" class="social-card">
+          <div class="social-icon"><i class="icon icon-${info.icon} icon-2xl" aria-hidden="true"></i></div>
+          <div class="social-name">${info.display}</div>
+          <div class="social-link">${info.handle} →</div>
+        </a>
+      `;
+    }).join('');
+  </script>
 </body>
 </html>
