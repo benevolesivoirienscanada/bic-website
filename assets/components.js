@@ -211,7 +211,7 @@ class BicFooter extends HTMLElement {
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="${PAGES.home[lang]}" class="brand">
-          <span class="brand-mark">B</span>
+          <span class="brand-logo-footer-badge"><img src="/assets/images/logo.png" alt="${esc(t.logoAlt)}" width="52" height="52"></span>
           <span class="brand-text" style="color: var(--cream);">BIC <small style="color: rgba(250,246,240,0.6);">${esc(t.brandLine)}</small></span>
         </a>
         <p>${esc(t.footer.tagline)}</p>
