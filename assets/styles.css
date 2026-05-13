@@ -1018,8 +1018,10 @@ nav {
 .contact-write-actions {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
+  width: 100%;
+  max-width: 420px;
 }
 .contact-write-note {
   font-size: 0.95rem;
