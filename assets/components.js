@@ -161,12 +161,10 @@ class BicNav extends HTMLElement {
   <div class="container nav-inner">
     <a href="${PAGES.home[lang]}" class="brand">
       <img src="/assets/images/logo.png" alt="${esc(t.logoAlt)}" class="brand-logo" width="44" height="44">
-      <span class="brand-text">
-         <small>
-            <span>BENEVOLES</span>
-            <span>IVOIRIENS</span>
-            <span>DU CANADA</span>
-         </small>
+      <span class="brand-text multi-line">
+        <span>BENEVOLES</span>
+        <span>IVOIRIENS</span>
+        <span>DU CANADA</span>
       </span>
     </a>
     <nav>
