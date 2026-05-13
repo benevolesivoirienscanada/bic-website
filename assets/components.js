@@ -10,7 +10,7 @@
  *   <bic-footer lang="fr"></bic-footer>
  *
  * `lang`  = "fr" ou "en"
- * `active` = "home" | "about" | "committees" | "events" | "volunteer" | "follow" | "contact"
+ * `active` = "home" | "about" | "committees" | "events" | "volunteer" | "contact"
  *           (correspond à la clé dans PAGES ci-dessous)
  */
 
@@ -39,7 +39,6 @@ const PAGES = {
   committees: { fr: '/comites.html',      en: '/en/committees.html' },
   events:     { fr: '/evenements.html',   en: '/en/events.html' },
   volunteer:  { fr: '/benevoles.html',    en: '/en/volunteer.html' },
-  follow:     { fr: '/nous-suivre.html',  en: '/en/follow.html' },
   contact:    { fr: '/contact.html',      en: '/en/contact.html' },
 };
 
@@ -57,7 +56,6 @@ const T = {
       committees: 'Comités',
       events: 'Événements',
       volunteer: 'Devenir bénévole',
-      follow: 'Nous suivre',
       contact: 'Contact',
     },
     footer: {
@@ -71,7 +69,6 @@ const T = {
       ],
       communityTitle: 'Communauté',
       communityLinks: [
-        { key: 'follow',  label: 'Nous suivre' },
         { key: 'contact', label: 'Contact' },
       ],
       membershipLabel: 'Adhésion',
@@ -92,7 +89,6 @@ const T = {
       committees: 'Committees',
       events: 'Events',
       volunteer: 'Volunteer',
-      follow: 'Follow Us',
       contact: 'Contact',
     },
     footer: {
@@ -106,7 +102,6 @@ const T = {
       ],
       communityTitle: 'Community',
       communityLinks: [
-        { key: 'follow',  label: 'Follow us' },
         { key: 'contact', label: 'Contact' },
       ],
       membershipLabel: 'Membership',
