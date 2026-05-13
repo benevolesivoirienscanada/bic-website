@@ -161,7 +161,7 @@ class BicNav extends HTMLElement {
   <div class="container nav-inner">
     <a href="${PAGES.home[lang]}" class="brand">
       <img src="/assets/images/logo.png" alt="${esc(t.logoAlt)}" class="brand-logo" width="44" height="44">
-      <span class="brand-text">BIC</span>
+      <span class="brand-text">Bénévoles Ivoiriens du Canada</span>
     </a>
     <nav>
       <ul class="nav-links">
@@ -207,7 +207,7 @@ class BicFooter extends HTMLElement {
       <div class="footer-brand">
         <a href="${PAGES.home[lang]}" class="brand">
           <span class="brand-logo-footer-badge"><img src="/assets/images/logo.png" alt="${esc(t.logoAlt)}" width="52" height="52"></span>
-          <span class="brand-text" style="color: var(--cream);">BIC</span>
+          <span class="brand-text footer-brand-fullname">Bénévoles Ivoiriens du Canada</span>
         </a>
         <p class="footer-brand-subtitle">${esc(t.brandLine)}</p>
         <p>${esc(t.footer.tagline)}</p>
