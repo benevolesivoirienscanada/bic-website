@@ -303,12 +303,16 @@ nav {
     max-height: calc(100vh - 72px);
     overflow-y: auto;
   }
+
+  /* Réduction du texte BIC pour que ça tienne sur mobile */
+  .brand-text {
+    font-size: 0.85rem; /* ajustez si nécessaire */
+  }
 }
 
 /* Sur très petits écrans, on masque la baseline du logo pour gagner de la place */
 @media (max-width: 480px) {
   .nav-cta {
-    /* Texte court sur très petits écrans */
     padding: 0.5rem 0.75rem;
     font-size: 0.72rem;
   }
@@ -316,14 +320,19 @@ nav {
     width: 36px;
     height: 36px;
   }
+
+  /* BIC encore plus petit pour éviter le wrapping */
+  .brand-text {
+    font-size: 0.75rem; /* ajustez si nécessaire */
+  }
 }
 
+/* Masquer le texte secondaire sur les écrans moyens */
 @media (max-width: 1200px) {
   .brand-text small {
     display: none;
   }
 }
-
 /* ---------- Boutons ----------------------------------------------------- */
 .btn {
   display: inline-flex;
