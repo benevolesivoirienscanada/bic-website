@@ -164,33 +164,18 @@ class BicNav extends HTMLElement {
     this.innerHTML = `
 <header class="nav">
   <div class="container nav-inner">
-    <!-- BRAND -->
     <a href="${PAGES.home[lang]}" class="brand">
       <img src="/assets/images/logo.png" alt="${esc(t.logoAlt)}" class="brand-logo" width="44" height="44">
       <span class="brand-text">BIC</span>
     </a>
-
-    <!-- HAMBURGER -->
-    <button class="nav-toggle" aria-label="${esc(t.openMenu)}" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-
-  <!-- FULLSCREEN DRAWER -->
-  <div class="nav-drawer">
-    <div class="nav-drawer-inner">
+    <nav>
       <ul class="nav-links">
         ${navItems}
       </ul>
-      <div class="nav-drawer-actions">
-        <a class="nav-cta" href="${LINKS.membership}" target="_blank" rel="noopener">
-          ${esc(t.join)}
-        </a>
-        <a class="nav-lang" href="${otherLangUrl}" hreflang="${otherLang}">
-          ${otherLangLabel}
-        </a>
-      </div>
-    </div>
+    </nav>
+    <a class="nav-lang" href="${otherLangUrl}" hreflang="${otherLang}" aria-label="${esc(t.langToggleLabel)}">${otherLangLabel}</a>
+    <a class="nav-cta" href="${LINKS.membership}" target="_blank" rel="noopener">${esc(t.join)}</a>
+    <button class="nav-toggle" aria-label="${esc(t.openMenu)}" aria-expanded="false"><span></span></button>
   </div>
 </header>
 `;
