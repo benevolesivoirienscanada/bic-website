@@ -1,0 +1,55 @@
+# _headers — Configuration du cache HTTP pour Cloudflare Pages
+# ==============================================================
+# Comment ça marche : Cloudflare lit ce fichier au déploiement et applique les
+# en-têtes correspondants à chaque réponse HTTP. Le pattern matching est simple :
+# une URL qui ressemble au motif → reçoit les en-têtes qui suivent (indentés).
+#
+# Stratégie : pas de cache long terme sur le HTML (pour que les nouveaux contenus
+# soient visibles immédiatement) ; cache court avec revalidation sur le CSS/JS
+# (pour les performances sans risquer de servir une vieille version).
+
+# ──────────────────────────────────────────────────────────────
+# Pages HTML : toujours revalider auprès de Cloudflare
+# ──────────────────────────────────────────────────────────────
+# `no-cache` ne veut pas dire "pas de cache". Cela veut dire :
+# le navigateur peut stocker, mais DOIT vérifier auprès du serveur (via ETag)
+# avant de servir une version locale. Le serveur répond 304 (Not Modified) si
+# rien n'a changé, donc c'est très rapide ET toujours frais.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# La racine (qui sert index.html) suit la même règle
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Les routes en/ aussi
+/en/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ──────────────────────────────────────────────────────────────
+# CSS et JavaScript : cache court avec revalidation
+# ──────────────────────────────────────────────────────────────
+# 1 heure de cache "frais", puis le navigateur revalide auprès du serveur.
+# Très bon compromis : performance pour les visites successives rapprochées,
+# mais aucun risque de servir une version périmée plus d'une heure.
+/assets/*.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/assets/*.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# ──────────────────────────────────────────────────────────────
+# Images : cache plus long (elles changent rarement)
+# ──────────────────────────────────────────────────────────────
+# 7 jours. Si vous remplacez logo.png, faites Purge Everything sur Cloudflare.
+/assets/images/*
+  Cache-Control: public, max-age=604800, must-revalidate
+
+# ──────────────────────────────────────────────────────────────
+# Bonus sécurité — en-têtes appliqués à toutes les pages
+# ──────────────────────────────────────────────────────────────
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
