@@ -304,12 +304,6 @@ nav {
     overflow-y: auto;
   }
 
-  /* Réduction du texte BIC pour que ça tienne sur mobile */
-  .brand-text {
-    font-size: 0.95rem; /* ajustez si nécessaire */
-  }
-}
-
 /* Sur très petits écrans, on masque la baseline du logo pour gagner de la place */
 @media (max-width: 480px) {
   .nav-cta {
