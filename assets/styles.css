@@ -253,7 +253,6 @@ nav {
   display: none;
   width: 40px;
   height: 40px;
-  flex-shrink: 0;
   align-items: center;
   justify-content: center;
 }
@@ -310,20 +309,12 @@ nav {
 @media (max-width: 480px) {
   .nav-cta {
     /* Texte court sur très petits écrans */
-    padding: 0.5rem 0.7rem;
-    font-size: 0.7rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.72rem;
   }
   .brand-logo {
     width: 36px;
     height: 36px;
-  }
-  /* Masquer le texte BIC à côté du logo pour libérer de l'espace
-     et empêcher le hamburger d'être poussé hors de l'écran */
-  .brand-text {
-    display: none;
-  }
-  .nav-inner {
-    gap: 0.5rem;
   }
 }
 
