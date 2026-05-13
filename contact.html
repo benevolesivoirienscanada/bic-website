@@ -15,8 +15,10 @@
 </head>
 <body>
 
+  <!-- NAVIGATION -->
   <bic-nav lang="fr" active="contact"></bic-nav>
 
+  <!-- PAGE HEADER -->
   <section class="page-header">
     <div class="container">
       <span class="eyebrow">Contact</span>
@@ -25,7 +27,7 @@
     </div>
   </section>
 
-  <!-- ============ COURRIEL : LE CŒUR DE LA PAGE ============ -->
+  <!-- CONTACT EMAIL -->
   <section class="contact-write" style="padding-top: 0;">
     <div class="container">
       <div class="contact-write-grid">
@@ -44,36 +46,49 @@
     </div>
   </section>
 
-  <!-- ============ AUTRES VOIES DE CONTACT ============ -->
+  <!-- SOCIAL MEDIA CARDS -->
   <section style="padding-top: 0;">
     <div class="container">
       <div class="section-header centered">
-        <span class="eyebrow">Autres voies</span>
+        <span class="eyebrow">Réseaux sociaux</span>
         <h2>D'autres façons de <span class="italic-accent" style="color: var(--teal-deep);">nous joindre</span>.</h2>
       </div>
-
-      <div class="contact-options">
-        <a class="contact-option" href="https://www.facebook.com/p/B%C3%A9n%C3%A9voles-Ivoiriens-du-Canada-BIC-100091865238462/" target="_blank" rel="noopener">
-          <div class="contact-option-icon"><i class="icon icon-facebook icon-xl" aria-hidden="true"></i></div>
-          <div class="contact-option-label">Facebook</div>
-          <div class="contact-option-handle">Bénévoles Ivoiriens du Canada</div>
-        </a>
-        <a class="contact-option" href="https://www.instagram.com/benevolesivoirienscanada/" target="_blank" rel="noopener">
-          <div class="contact-option-icon"><i class="icon icon-instagram icon-xl" aria-hidden="true"></i></div>
-          <div class="contact-option-label">Instagram</div>
-          <div class="contact-option-handle">@benevolesivoirienscanada</div>
-        </a>
-        <a class="contact-option" href="https://www.tiktok.com/@benevolesivoirienscanada" target="_blank" rel="noopener">
-          <div class="contact-option-icon"><i class="icon icon-music icon-xl" aria-hidden="true"></i></div>
-          <div class="contact-option-label">TikTok</div>
-          <div class="contact-option-handle">@benevolesivoirienscanada</div>
-        </a>
+  
+      <div class="socials-grid" id="socials-grid">
+        <!-- Social cards will be generated here -->
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <bic-footer lang="fr"></bic-footer>
 
+  <!-- COMPONENTS JS -->
   <script src="assets/components.js" defer></script>
+
+  <!-- SOCIALS GENERATION -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('socials-grid');
+
+      const SOCIAL_INFO = {
+        facebook: { icon: 'facebook', display: 'Facebook', handle: 'Bénévoles Ivoiriens du Canada' },
+        instagram: { icon: 'instagram', display: 'Instagram', handle: '@benevolesivoirienscanada' },
+        tiktok: { icon: 'music', display: 'TikTok', handle: '@benevolesivoirienscanada' }
+      };
+
+      grid.innerHTML = Object.entries(SOCIAL).map(([key, url]) => {
+        const info = SOCIAL_INFO[key] || { icon: 'globe', display: key, handle: '' };
+        return `
+          <a href="${url}" target="_blank" rel="noopener" class="social-card">
+            <div class="social-icon"><i class="icon icon-${info.icon} icon-xl" aria-hidden="true"></i></div>
+            <div class="social-name">${info.display}</div>
+            <div class="social-link">${info.handle} →</div>
+          </a>
+        `;
+      }).join('');
+    });
+  </script>
+
 </body>
 </html>
