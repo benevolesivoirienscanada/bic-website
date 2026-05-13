@@ -1023,11 +1023,6 @@ nav {
   width: 100%;
   max-width: 420px;
 }
-.contact-write-note {
-  font-size: 0.95rem;
-  color: var(--muted);
-  margin: 0;
-}
 
 /* Côté visuel droit : un blob coloré + une icône qui flotte au-dessus */
 /* ==========================================
