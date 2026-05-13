@@ -262,8 +262,19 @@ nav {
 .nav-toggle span::after  { top: 7px; }
 
 @media (max-width: 900px) {
-  .nav-links, .nav-cta { display: none; }
+  /* En mobile : on cache les liens du menu, mais on garde le sélecteur de langue
+     ET le bouton "Rejoindre BIC" visibles dans la barre du haut.
+     Le bouton hamburger ouvre/ferme le panneau déroulant des liens. */
+  .nav-links { display: none; }
   .nav-toggle { display: flex; }
+
+  /* Compacter le bouton CTA pour qu'il tienne dans la barre mobile */
+  .nav-cta {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.78rem;
+  }
+
+  /* Panneau déroulant des liens, sous la barre */
   .nav.open .nav-links {
     display: flex;
     flex-direction: column;
@@ -275,12 +286,22 @@ nav {
     padding: 1.5rem var(--gutter);
     gap: 1rem;
     border-bottom: 1px solid var(--line);
+    /* Évite le débordement sur très petits écrans */
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
   }
-  .nav.open .nav-cta {
-    display: inline-flex;
-    position: absolute;
-    top: calc(72px + 1.5rem + 7 * 2rem);
-    left: var(--gutter);
+}
+
+/* Sur très petits écrans, on masque la baseline du logo pour gagner de la place */
+@media (max-width: 480px) {
+  .nav-cta {
+    /* Texte court sur très petits écrans */
+    padding: 0.5rem 0.75rem;
+    font-size: 0.72rem;
+  }
+  .brand-logo {
+    width: 36px;
+    height: 36px;
   }
 }
 
@@ -914,4 +935,21 @@ nav {
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+}
+
+/* Badge circulaire crème pour le logo dans le footer (fond marine foncé) */
+.brand-logo-footer-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  background: var(--cream);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+.brand-logo-footer-badge img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
 }
