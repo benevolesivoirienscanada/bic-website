@@ -1,7 +1,7 @@
 # BIC — Site web
 
 Site officiel des **Bénévoles Ivoiriens du Canada** (BIC).
-Site statique en HTML/CSS/JS pur — pensé pour être déployé sur **Cloudflare Pages** via GitHub.
+Site statique bilingue (FR / EN) en HTML, CSS et JavaScript pur — déployé sur **Cloudflare Workers** via GitHub.
 
 ---
 
@@ -9,85 +9,195 @@ Site statique en HTML/CSS/JS pur — pensé pour être déployé sur **Cloudflar
 
 ```
 bic-website/
-├── index.html          ← Page d'accueil
-├── a-propos.html       ← À propos (histoire, mission, valeurs, CA)
-├── comites.html        ← Nos 5 comités
-├── evenements.html     ← Événements à venir + archives
-├── benevoles.html      ← Devenir bénévole
-├── contact.html        ← Coordonnées + formulaire
+├── index.html              ← Accueil (FR)
+├── a-propos.html           ← À propos (histoire, mission, valeurs, CA)
+├── comites.html            ← Nos 5 comités
+├── evenements.html         ← Événements à venir + archives
+├── benevoles.html          ← Devenir bénévole
+├── contact.html            ← Coordonnées
+├── en/                     ← Version anglaise (mêmes pages, traduites)
+│   ├── index.html
+│   ├── about.html
+│   ├── committees.html
+│   ├── events.html
+│   ├── volunteer.html
+│   └── contact.html
 ├── assets/
-│   ├── styles.css      ← Toute la mise en forme
-│   └── icon.css        ← icones
-│   └── components.js   ← Tout le header, nav & footer
-├── README.md           ← Ce fichier
-└── .gitignore
+│   ├── styles.css          ← Mise en forme (19 sections, sommaire en haut)
+│   ├── icons.css           ← Bibliothèque d'icônes vectorielles (Lucide)
+│   ├── components.js       ← Web Components : <bic-nav>, <bic-footer>
+│   └── images/
+│       └── logo.png        ← Logo BIC
+├── _headers                ← Cache-Control HTTP (Cloudflare)
+├── wrangler.jsonc          ← Config Cloudflare Workers
+└── README.md               ← Ce fichier
 ```
 
 Aucun build, aucune dépendance npm. Vous pouvez ouvrir `index.html` directement dans un navigateur pour visualiser le site.
 
 ---
 
-## 🚀 Déploiement sur Cloudflare Pages
+## 🧩 Architecture
 
-### Étape 1 — Pousser le code sur GitHub
+### Web Components — un seul endroit pour modifier le nav et le footer
 
-```bash
-# Dans le dossier du projet
-git init
-git add .
-git commit -m "Initial commit — site BIC"
-git branch -M main
-git remote add origin https://github.com/VOTRE-COMPTE/bic-website.git
-git push -u origin main
+Plutôt que de dupliquer le menu et le pied de page sur chaque page HTML, ils sont définis **une seule fois** dans `assets/components.js` comme des custom elements HTML :
+
+```html
+<!-- Dans chaque page : -->
+<bic-nav lang="fr" active="home"></bic-nav>
+<!-- ... contenu de la page ... -->
+<bic-footer lang="fr"></bic-footer>
 ```
 
-### Étape 2 — Connecter le repo à Cloudflare Pages
+Le composant `<bic-nav>` lit ses attributs `lang` (fr / en) et `active` (clé de la page courante) pour afficher le bon menu avec le bon lien actif, le sélecteur de langue qui pointe vers la page équivalente dans l'autre langue, etc.
 
-1. Allez sur [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** → **Create application** → onglet **Pages** → **Connect to Git**.
-2. Choisissez votre compte GitHub, autorisez Cloudflare, puis sélectionnez le repo `bic-website`.
-3. À l'étape **Set up builds and deployments**, utilisez ces réglages :
+**Pour modifier un lien social, un libellé de menu ou une URL** : ouvrez `components.js`, modifiez les objets `SOCIAL`, `LINKS`, `PAGES` ou `T` (traductions) en haut du fichier. Le changement se propage à toutes les pages.
 
-   | Champ                         | Valeur                          |
-   | ----------------------------- | ------------------------------- |
-   | **Production branch**         | `main`                          |
-   | **Framework preset**          | `None`                          |
-   | **Build command**             | *(laissez vide)*                |
-   | **Build output directory**    | `/` *(la racine du repo)*       |
-   | **Root directory (advanced)** | *(laissez vide)*                |
+### Header — structure 3 zones
 
-4. Cliquez **Save and Deploy**. Cloudflare va déployer le site en ~30 secondes et vous donner une URL `*.pages.dev`.
+Sur desktop (≥ 900 px), la navigation est organisée en grille à 3 colonnes pour une distinction visuelle claire :
 
-### Étape 3 — Brancher votre nom de domaine
+```
+[ Logo + nom organisme ]   [ Menu pages centré ]   [ EN | S'engager ]
+        gauche                    centre                  droite
+```
 
-1. Dans le projet Pages → onglet **Custom domains** → **Set up a custom domain**.
-2. Entrez votre domaine (ex: `benevolesivoirienscanada.com`).
-3. Si le domaine est déjà géré par Cloudflare, le DNS se configure automatiquement.
-   Sinon, Cloudflare vous donnera les enregistrements DNS à ajouter chez votre registrar.
+Sur mobile (< 900 px), le menu central devient un panneau déroulant via le bouton hamburger ; les boutons EN et S'engager restent visibles dans la barre du haut.
 
-### Étape 4 — Déploiements automatiques
+### CSS — fichier unique, bien organisé
 
-À partir de maintenant, **chaque `git push` sur la branche `main`** redéploie automatiquement le site en production. Les autres branches créent des **previews** (URL de prévisualisation) — pratique pour tester avant de fusionner.
+`assets/styles.css` contient toute la mise en forme du site, organisée en **19 sections numérotées** avec un sommaire en haut. Pour naviguer rapidement, faites `Cmd+F` (Mac) ou `Ctrl+F` (Windows) puis tapez `/* 05. NAVIGATION` (par exemple) pour sauter à la section voulue.
+
+Sections principales :
+
+| # | Section | Contenu |
+|---|---------|---------|
+| 01 | Reset & base | Reset CSS minimal |
+| 02 | Design tokens | Variables (couleurs, fonts, mesures) |
+| 03 | Typographie | h1-h4, eyebrow, italic-accent |
+| 04 | Layout | Container, sections |
+| 05 | Navigation | Header, brand, menu, boutons (refonte 3 zones) |
+| 06 | Boutons | `.btn`, `.btn-primary`, `.btn-donate` |
+| 07-13 | Composants | Hero, stats, events, comités, valeurs, CTA |
+| 14-17 | Pages | Pages intérieures, socials, contact, footer |
+| 18-19 | Animations / a11y | fadeUp, reduced-motion, focus-visible |
+
+### Icônes — Lucide en CSS
+
+Les icônes du site (courriel, réseaux sociaux, valeurs, comités, etc.) sont des SVG vectoriels de la bibliothèque [Lucide](https://lucide.dev), embarqués dans `assets/icons.css` en tant que masks CSS. Avantages : rendu identique sur tous les navigateurs, couleur héritée du contexte via `currentColor`, aucun emoji à gérer.
+
+```html
+<!-- Usage -->
+<i class="icon icon-mail" aria-hidden="true"></i>
+<i class="icon icon-facebook icon-xl" aria-hidden="true"></i>
+```
+
+Tailles disponibles : par défaut (1em), `.icon-lg` (1.5em), `.icon-xl` (2em), `.icon-2xl` (2.5em), `.icon-3xl` (3em).
 
 ---
 
-## ✏️ Éléments à compléter avant la mise en ligne
+## 🚀 Déploiement sur Cloudflare Workers
 
-Recherchez `⚠ À COMPLÉTER` dans le code pour repérer tous les emplacements. En résumé :
+Le site est servi par Cloudflare Workers (mode "static assets"). Chaque `git push` sur la branche `main` déclenche un redéploiement automatique en ~30 secondes.
 
-- **`contact.html`** — remplacer `contact@bic.example` par la bonne adresse courriel
-- **`a-propos.html`** — remplacer `[Nom à compléter]` par les noms des membres du Conseil d'administration
-- **Footers de toutes les pages** — mettre à jour les liens des réseaux sociaux (les `href="#"`)
-- **Optionnel** — `contact.html` : remplacer le bloc placeholder par une `<iframe>` Google Forms de contact
+### Configuration initiale (à faire une seule fois)
 
-### Astuce pour mettre à jour plusieurs pages d'un coup
+1. **Allez sur [dash.cloudflare.com](https://dash.cloudflare.com)** → **Workers & Pages** → **Create application**.
+2. Onglet **Workers** → **Connect to Git** → choisissez le repo `bic-website`.
+3. À l'étape **Set up builds and deployments** :
 
-Le menu de navigation et le pied de page sont dupliqués sur les 7 pages. Si vous modifiez un lien social ou un élément de menu, vous devez le faire sur chaque page. Pour un changement global, utilisez « Rechercher et remplacer » dans VS Code (`Ctrl+Shift+H`).
+   | Champ | Valeur |
+   | --- | --- |
+   | **Production branch** | `main` |
+   | **Framework preset** | `None` |
+   | **Build command** | *(vide)* |
+   | **Deploy command** | *(vide)* |
+   | **Root directory** | `/` |
+
+4. Cliquez **Save and Deploy**. Une URL `*.workers.dev` est générée.
+
+### Brancher le domaine custom
+
+1. Projet Workers → onglet **Settings** → **Domains & Routes** → **Add Custom Domain**.
+2. Tapez votre domaine (ex: `benevolesivoirienscanada.com`).
+3. Cloudflare configure le DNS automatiquement si le domaine est déjà sur Cloudflare.
+
+### Cache HTTP : le fichier `_headers`
+
+Le fichier `_headers` à la racine du repo contrôle les en-têtes HTTP envoyés par Cloudflare :
+
+- **Pages HTML** : `max-age=0, must-revalidate` → les changements sont visibles immédiatement après chaque déploiement, sans cache navigateur.
+- **CSS / JS** : 1 heure de cache avec revalidation.
+- **Images** : 7 jours.
+
+⚠️ **Important** : si vous configurez Cloudflare zone-level "Browser Cache TTL", mettez-le sur **"Respect Existing Headers"** — sinon le `_headers` est ignoré.
+
+### Branches de preview
+
+Toute branche autre que `main` est déployée sur une URL de preview du genre `<branche>-bic-website.<compte>.workers.dev`. Pratique pour tester un changement avant de fusionner sur `main`.
+
+---
+
+## ✏️ Workflow pour modifier le site
+
+### Petits changements (texte, lien, couleur)
+
+Directement sur GitHub web :
+
+1. Ouvrir le fichier → cliquer sur le crayon ✏️
+2. Modifier → en bas : **Commit changes**
+3. Cloudflare redéploie en ~30 secondes
+
+### Changements multi-fichiers (nouvelle page, refonte section)
+
+Téléchargez le repo en ZIP via GitHub (`Code → Download ZIP`), modifiez en local avec votre éditeur favori, puis uploadez les fichiers modifiés via **Add file → Upload files** (cocher « Replace existing files »).
+
+### Modifier le nav, le footer, les liens sociaux
+
+**Une seule édition** dans `assets/components.js`. Cherchez les objets en haut du fichier :
+
+```js
+// Liens sociaux : un seul endroit pour les changer
+const SOCIAL = {
+  facebook: 'https://facebook.com/...',
+  instagram: 'https://instagram.com/...',
+  tiktok: 'https://tiktok.com/...',
+};
+
+// Formulaires externes
+const LINKS = {
+  membership: 'https://docs.google.com/forms/...',
+  donate: 'https://www.zeffy.com/...',
+};
+
+// Traductions FR / EN
+const T = {
+  fr: { nav: { home: 'Accueil', ... }, ... },
+  en: { nav: { home: 'Home', ... }, ... },
+};
+```
+
+### Si quelque chose casse
+
+Chaque commit est sauvegardé. Pour annuler un changement :
+
+1. GitHub → onglet **Commits** (sous le nom du repo)
+2. Trouvez le commit problématique → bouton **Revert** en haut à droite
+3. Confirmez → Cloudflare redéploie la version précédente en ~30 secondes
+
+### Voir vos changements immédiatement (cache navigateur)
+
+Grâce au `_headers`, vos **visiteurs** voient les changements tout de suite. Mais **votre** navigateur peut avoir mis en cache l'ancienne version pendant que vous travaillez. Réflexes :
+
+- **Hard refresh** : `Cmd+Shift+R` (Mac) ou `Ctrl+Shift+R` (Windows)
+- Ou **DevTools ouvert avec "Disable cache" coché** dans l'onglet Network
 
 ---
 
 ## 🎨 Personnaliser la palette de couleurs
 
-Toutes les couleurs sont définies en CSS variables au début de `assets/styles.css` :
+Toutes les couleurs sont définies en variables CSS dans la section **02. DESIGN TOKENS** de `assets/styles.css` :
 
 ```css
 :root {
@@ -96,8 +206,8 @@ Toutes les couleurs sont définies en CSS variables au début de `assets/styles.
   --orange-soft: #E89A6E;
   --teal: #4AAB8C;         /* Vert teal accent */
   --teal-deep: #2F8A6E;
-  --navy: #1F2D3D;         /* Bleu marine texte */
-  --cream: #FAF6F0;        /* Fond crème */
+  --navy: #1F2D3D;         /* Bleu marine texte / fond */
+  --cream: #FAF6F0;        /* Fond crème principal */
   /* ... */
 }
 ```
@@ -106,13 +216,12 @@ Changer une variable se répercute partout dans le site.
 
 ---
 
-## 📸 Ajouter des photos
+## 📸 Ajouter des photos aux cartes d'événements
 
-Pour remplacer les emojis des cartes d'événements par de vraies photos :
+Pour remplacer les emojis temporaires des cartes d'événements par de vraies photos :
 
-1. Créez un dossier `assets/images/`.
-2. Ajoutez vos photos optimisées (WebP de préférence, max 1200px de large).
-3. Dans le HTML, remplacez le bloc emoji par une balise `<img>` :
+1. Placez vos photos optimisées dans `assets/images/` (WebP de préférence, max 1200px de large).
+2. Dans le HTML, remplacez le bloc emoji par une balise `<img>` :
 
 ```html
 <!-- Avant -->
@@ -129,7 +238,7 @@ Pour remplacer les emojis des cartes d'événements par de vraies photos :
 
 ## 🛠️ Développement local
 
-Pour tester le site en local, ouvrez simplement `index.html` dans un navigateur. Pour avoir un vrai serveur HTTP (utile pour certains tests) :
+Pour tester le site en local avec un serveur HTTP (recommandé pour que les chemins absolus comme `/assets/...` fonctionnent) :
 
 ```bash
 # Avec Python 3
@@ -138,7 +247,7 @@ python3 -m http.server 8000
 # Ou avec Node.js
 npx serve
 
-# Ouvrez ensuite http://localhost:8000
+# Puis ouvrez http://localhost:8000
 ```
 
 ---
