@@ -1149,6 +1149,10 @@ nav {
   }
 }
 
+#web-design {
+    scroll-margin-top: 100px; 
+}
+
 /* Région — petite ligne discrète */
 .contact-region {
   text-align: center;
