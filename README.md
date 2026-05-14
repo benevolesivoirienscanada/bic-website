@@ -59,11 +59,11 @@ Le composant `<bic-nav>` lit ses attributs `lang` (fr / en) et `active` (clé de
 Sur desktop (≥ 900 px), la navigation est organisée en grille à 3 colonnes pour une distinction visuelle claire :
 
 ```
-[ Logo + nom organisme ]   [ Menu pages centré ]   [ EN | S'engager ]
+[ Logo + nom organisme ]   [ Menu pages centré ]   [ EN | Rejoindre BIC ]
         gauche                    centre                  droite
 ```
 
-Sur mobile (< 900 px), le menu central devient un panneau déroulant via le bouton hamburger ; les boutons EN et S'engager restent visibles dans la barre du haut.
+Sur mobile (< 900 px), le menu central devient un panneau déroulant via le bouton hamburger ; les boutons EN et Rejoindre BIC restent visibles dans la barre du haut.
 
 ### CSS — fichier unique, bien organisé
 
