@@ -159,6 +159,8 @@ class BicNav extends HTMLElement {
     this.innerHTML = `
 <header class="nav">
   <div class="container nav-inner">
+
+    <!-- Zone GAUCHE : Logo + nom de l'organisme -->
     <a href="${PAGES.home[lang]}" class="brand">
       <img src="/assets/images/logo.png" alt="${esc(t.logoAlt)}" class="brand-logo" width="44" height="44">
       <span class="brand-text multi-line">
@@ -167,14 +169,21 @@ class BicNav extends HTMLElement {
         <span>DU CANADA</span>
       </span>
     </a>
-    <nav>
+
+    <!-- Zone CENTRE : Menu de navigation -->
+    <nav class="nav-menu">
       <ul class="nav-links">
         ${navItems}
       </ul>
     </nav>
-    <a class="nav-lang" href="${otherLangUrl}" hreflang="${otherLang}" aria-label="${esc(t.langToggleLabel)}">${otherLangLabel}</a>
-    <a class="nav-cta" href="${LINKS.membership}" target="_blank" rel="noopener">${esc(t.join)}</a>
-    <button class="nav-toggle" aria-label="${esc(t.openMenu)}" aria-expanded="false"><span></span></button>
+
+    <!-- Zone DROITE : Actions (langue + CTA + hamburger mobile) -->
+    <div class="nav-actions">
+      <a class="nav-lang" href="${otherLangUrl}" hreflang="${otherLang}" aria-label="${esc(t.langToggleLabel)}">${otherLangLabel}</a>
+      <a class="nav-cta" href="${LINKS.membership}" target="_blank" rel="noopener">${esc(t.join)}</a>
+      <button class="nav-toggle" aria-label="${esc(t.openMenu)}" aria-expanded="false"><span></span></button>
+    </div>
+
   </div>
 </header>
 `;
