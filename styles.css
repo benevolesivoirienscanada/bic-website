@@ -1,0 +1,1224 @@
+/* ==========================================================================
+   BIC — Bénévoles Ivoiriens du Canada
+   Feuille de style globale
+   --------------------------------------------------------------------------
+
+   SOMMAIRE
+   ─────────
+   01. RESET & BASE ........................ Reset CSS minimal
+   02. DESIGN TOKENS ....................... Variables (couleurs, fonts, mesures)
+   03. TYPOGRAPHIE ......................... Titres, eyebrow, italic-accent
+   04. LAYOUT .............................. Container, sections, helpers
+   05. NAVIGATION .......................... Header, brand, menu, CTA
+   06. BOUTONS ............................. .btn, .btn-primary, .btn-donate
+   07. HERO (accueil) ...................... Hero + hero-card
+   08. STATS ............................... Section chiffres bleu marine
+   09. SECTION HEADER ...................... .section-header générique
+   10. CARTES ÉVÉNEMENTS ................... Events grid + cards
+   11. COMITÉS ............................. Liste committees
+   12. VALEURS / GRILLE 5 .................. .values-grid (4-5 cartes)
+   13. CTA BLOCK ........................... Bandeau orange final
+   14. PAGES INTÉRIEURES ................... .page-header, .prose
+   15. RÉSEAUX SOCIAUX ..................... .socials-grid
+   16. PAGE CONTACT ........................ .contact-write, .contact-options
+   17. FOOTER .............................. Pied de page navy
+   18. ANIMATIONS .......................... fadeUp, etc.
+   19. ACCESSIBILITÉ ....................... reduced-motion, focus-visible
+
+   Pour naviguer : Cmd+F "/* 05. NAVIGATION" pour sauter à la section voulue.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01. RESET & BASE
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+img, picture, svg, video { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; border: 0; background: none; }
+a { color: inherit; }
+
+
+/* ==========================================================================
+   02. DESIGN TOKENS
+   ========================================================================== */
+
+:root {
+  /* Couleurs ─ palette BIC */
+  --orange: #C8693E;
+  --orange-deep: #A8512A;
+  --orange-soft: #E89A6E;
+  --teal: #4AAB8C;
+  --teal-deep: #2F8A6E;
+  --navy: #1F2D3D;
+  --navy-soft: #2E4359;
+  --cream: #FAF6F0;
+  --cream-warm: #F2EAD8;
+  --white: #FFFFFF;
+  --ink: #1A1A1A;
+  --muted: #6B6B6B;
+  --line: rgba(31, 45, 61, 0.12);
+
+  /* Typographie */
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font-body: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Mesures */
+  --container: 1240px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --radius: 6px;
+  --radius-lg: 18px;
+  --nav-height: 72px;
+
+  /* Ombres */
+  --shadow-sm: 0 1px 2px rgba(31, 45, 61, 0.06), 0 2px 8px rgba(31, 45, 61, 0.04);
+  --shadow-md: 0 4px 12px rgba(31, 45, 61, 0.08), 0 8px 32px rgba(31, 45, 61, 0.06);
+  --shadow-lg: 0 12px 40px rgba(31, 45, 61, 0.12);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--navy);
+  background: var(--cream);
+  overflow-x: hidden;
+}
+
+/* Grain texture overlay subtil — donne du caractère sans crier */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.78 0 0 0 0 0.41 0 0 0 0 0.24 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+
+/* ==========================================================================
+   03. TYPOGRAPHIE
+   ========================================================================== */
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  font-variation-settings: "SOFT" 50, "WONK" 0, "opsz" 144;
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 5.5rem); }
+h2 { font-size: clamp(2rem, 4.5vw, 3.5rem); }
+h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+h4 { font-size: 1.25rem; letter-spacing: -0.01em; }
+
+p { color: var(--navy-soft); }
+
+/* Eyebrow — petite étiquette avec tiret avant chaque titre de section */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--orange);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Italique accentué utilisé dans les titres pour mettre un mot en relief */
+.italic-accent {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+
+/* ==========================================================================
+   04. LAYOUT
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+section { padding: clamp(4rem, 9vw, 7rem) 0; }
+
+
+/* ==========================================================================
+   05. NAVIGATION
+   --------------------------------------------------------------------------
+   Structure 3 zones en desktop :
+     [ LOGO + Brand text ]   [ Menu pages centré ]   [ EN | S'engager ]
+            gauche                   centre                  droite
+
+   En mobile (< 900px) :
+     [ LOGO + Brand text ]                          [ EN | S'engager | ☰ ]
+     Le menu pages devient un panneau déroulant via le hamburger.
+   ========================================================================== */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 246, 240, 0.85);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Conteneur principal : grille 3 colonnes en desktop */
+.nav-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  height: var(--nav-height);
+}
+
+/* ----- Zone GAUCHE : Logo + Brand text ----- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: var(--navy);
+  min-width: 0; /* permet au texte de tronquer si manque de place */
+}
+.brand:hover .brand-logo {
+  transform: scale(1.04);
+  transition: transform 0.25s;
+}
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  object-fit: contain;
+  transition: transform 0.25s;
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* Variante multi-lignes : "BÉNÉVOLES / IVOIRIENS / DU CANADA" empilé */
+.brand-text.multi-line {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.brand-text.multi-line span {
+  display: block;
+}
+
+/* ----- Zone CENTRE : Menu pages ----- */
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.1rem;
+  list-style: none;
+  padding: 0;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--navy);
+  position: relative;
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--orange); }
+.nav-links a.active { color: var(--orange); }
+.nav-links a.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--orange);
+}
+
+/* ----- Zone DROITE : Actions (EN + S'engager) ----- */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+/* Boutons EN et S'engager — taille uniforme (height + padding identiques) */
+.nav-lang,
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 40px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+
+/* Sélecteur de langue : outline */
+.nav-lang {
+  color: var(--navy);
+  background: transparent;
+  border: 1.5px solid var(--line);
+  letter-spacing: 0.08em;
+}
+.nav-lang::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/%3E%3C/svg%3E") center / contain no-repeat;
+  opacity: 0.7;
+}
+.nav-lang:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  background: rgba(200, 105, 62, 0.06);
+}
+
+/* Bouton "S'engager" : plein navy */
+.nav-cta {
+  background: var(--navy);
+  color: var(--cream);
+}
+.nav-cta:hover {
+  background: var(--orange);
+  transform: translateY(-1px);
+}
+
+/* ----- Bouton hamburger mobile ----- */
+.nav-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+.nav-toggle span {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--navy);
+}
+.nav-toggle span::before,
+.nav-toggle span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 2px;
+  background: var(--navy);
+}
+.nav-toggle span::before { top: -7px; }
+.nav-toggle span::after  { top: 7px; }
+
+/* ----- Responsive : mobile ----- */
+@media (max-width: 900px) {
+  /* En mobile : on cache le menu central, le hamburger apparaît dans la zone droite.
+     Les boutons EN et S'engager restent visibles dans la barre. */
+  .nav-menu { display: none; }
+  .nav-toggle { display: flex; }
+
+  /* On n'a plus que 2 zones (logo gauche, actions droite) */
+  .nav-inner {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+
+  /* Boutons un peu plus compacts */
+  .nav-lang,
+  .nav-cta {
+    height: 36px;
+    padding: 0 0.85rem;
+    font-size: 0.78rem;
+  }
+
+  /* Panneau déroulant des liens, sous la barre */
+  .nav.open .nav-menu {
+    display: flex;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    padding: 1.5rem var(--gutter);
+    max-height: calc(100vh - var(--nav-height));
+    overflow-y: auto;
+  }
+  .nav.open .nav-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+}
+
+/* Sur très petits écrans : compactage supplémentaire */
+@media (max-width: 480px) {
+  .nav-inner {
+    gap: 0.5rem;
+  }
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+  .brand-text.multi-line {
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+  }
+  .nav-lang,
+  .nav-cta {
+    height: 34px;
+    padding: 0 0.7rem;
+    font-size: 0.7rem;
+    gap: 0.3rem;
+  }
+  .nav-lang::before {
+    width: 12px;
+    height: 12px;
+  }
+  .nav-actions {
+    gap: 0.4rem;
+  }
+}
+
+
+/* ==========================================================================
+   06. BOUTONS
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.75rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--orange);
+  color: var(--cream);
+  box-shadow: var(--shadow-md);
+}
+.btn-primary:hover {
+  background: var(--orange-deep);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--navy);
+  border: 1.5px solid var(--navy);
+}
+.btn-secondary:hover { background: var(--navy); color: var(--cream); }
+.btn-arrow::after {
+  content: "→";
+  transition: transform 0.2s;
+  font-size: 1.1em;
+}
+.btn-arrow:hover::after { transform: translateX(4px); }
+
+/* Bouton "Faire un don" — signature teal */
+.btn-donate {
+  background: var(--teal);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+.btn-donate::before {
+  content: "♥";
+  font-size: 1em;
+  margin-right: 0.3em;
+}
+.btn-donate:hover {
+  background: var(--teal-deep);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+.cta-block .btn-donate {
+  background: var(--cream);
+  color: var(--teal-deep);
+  border: 1.5px solid var(--cream);
+}
+.cta-block .btn-donate:hover {
+  background: transparent;
+  color: var(--cream);
+}
+
+/* Groupement de boutons côte à côte */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+
+/* ==========================================================================
+   07. HERO (page d'accueil)
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 50% at 80% 20%, rgba(74, 171, 140, 0.18), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 80%, rgba(200, 105, 62, 0.22), transparent 55%),
+    var(--cream);
+}
+.hero-decor {
+  position: absolute;
+  right: -80px;
+  top: 40px;
+  width: 380px;
+  height: 380px;
+  z-index: -1;
+  opacity: 0.5;
+  animation: rotateSlow 60s linear infinite;
+}
+@keyframes rotateSlow {
+  to { transform: rotate(360deg); }
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+.hero h1 { margin: 1.5rem 0 1.5rem; }
+.hero h1 .accent {
+  font-style: italic;
+  color: var(--orange);
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+}
+.hero-lede {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  max-width: 540px;
+  margin-bottom: 2.5rem;
+  color: var(--navy-soft);
+}
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+/* Carte d'engagement à droite du hero */
+.hero-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  pointer-events: none;
+}
+.hero-card-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--teal-deep);
+  margin-bottom: 0.6rem;
+}
+.hero-card-quote {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  line-height: 1.3;
+  color: var(--navy);
+  font-style: italic;
+  font-variation-settings: "SOFT" 100;
+  margin-bottom: 1.5rem;
+}
+.hero-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+
+/* ==========================================================================
+   08. STATS (section chiffres)
+   ========================================================================== */
+
+.stats {
+  background: var(--navy);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.stats::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 105, 62, 0.25), transparent 70%);
+}
+.stats .container { position: relative; z-index: 1; }
+.stats h2 { color: var(--cream); }
+.stats .eyebrow { color: var(--orange-soft); }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+@media (max-width: 760px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.stat {
+  border-top: 1px solid rgba(250, 246, 240, 0.15);
+  padding-top: 1.5rem;
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 500;
+  color: var(--orange-soft);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.03em;
+}
+.stat-label {
+  font-size: 0.95rem;
+  color: rgba(250, 246, 240, 0.75);
+  line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   09. SECTION HEADER (générique)
+   ========================================================================== */
+
+.section-header {
+  max-width: 720px;
+  margin-bottom: 4rem;
+}
+.section-header.centered {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.section-header h2 { margin-top: 1rem; }
+.section-header p { margin-top: 1.5rem; font-size: 1.1rem; }
+
+
+/* ==========================================================================
+   10. CARTES ÉVÉNEMENTS
+   ========================================================================== */
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.event-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+.event-card-img {
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--orange-soft), var(--orange));
+  display: grid;
+  place-items: center;
+  font-size: 4rem;
+  position: relative;
+}
+.event-card-img.variant-teal {
+  background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+}
+.event-card-img.variant-navy {
+  background: linear-gradient(135deg, var(--navy-soft), var(--navy));
+}
+.event-card-body {
+  padding: 1.75rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.event-card-date {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+.event-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+.event-card p {
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+.event-card-link {
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.event-card-link::after {
+  content: "→";
+  transition: transform 0.2s;
+}
+.event-card:hover .event-card-link::after {
+  transform: translateX(4px);
+}
+
+
+/* ==========================================================================
+   11. COMITÉS
+   ========================================================================== */
+
+.committee-list {
+  display: grid;
+  gap: 1.5rem;
+}
+.committee {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: clamp(2rem, 4vw, 3rem);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+@media (max-width: 720px) {
+  .committee { grid-template-columns: 1fr; }
+}
+
+.committee-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--cream-warm);
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+.committee:nth-child(2n) .committee-icon { background: rgba(74, 171, 140, 0.18); }
+.committee:nth-child(3n) .committee-icon { background: rgba(200, 105, 62, 0.18); }
+
+.committee h3 { margin-bottom: 1rem; }
+.committee ul { padding-left: 0; list-style: none; margin-top: 1.25rem; }
+.committee ul li {
+  padding: 0.45rem 0 0.45rem 1.5rem;
+  position: relative;
+  color: var(--navy-soft);
+  font-size: 0.97rem;
+}
+.committee ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.95rem;
+  width: 8px;
+  height: 1.5px;
+  background: var(--orange);
+}
+
+/* Couleurs d'icônes Lucide (override emoji) */
+.committee-icon .icon { color: var(--orange); }
+.committee:nth-child(2n) .committee-icon .icon { color: var(--teal-deep); }
+.committee:nth-child(3n) .committee-icon .icon { color: var(--orange-deep); }
+
+
+/* ==========================================================================
+   12. VALEURS / GRILLE 5
+   --------------------------------------------------------------------------
+   Utilisée pour : CA (5 cartes), 5 raisons, Ce que vous y trouverez, Valeurs (4)
+   ========================================================================== */
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+.value {
+  padding: 2rem;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.value:hover { transform: translateY(-4px); }
+.value-emoji { font-size: 2.2rem; margin-bottom: 1rem; }
+.value h3 { font-size: 1.3rem; margin-bottom: 0.8rem; }
+.value p { font-size: 0.95rem; }
+
+/* Couleurs d'icônes Lucide en cycles */
+.value-emoji .icon { color: var(--orange); }
+.value:nth-child(2n) .value-emoji .icon { color: var(--teal-deep); }
+.value:nth-child(3n) .value-emoji .icon { color: var(--navy); }
+
+
+/* ==========================================================================
+   13. CTA BLOCK (bandeau orange en fin de page)
+   ========================================================================== */
+
+.cta-block {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-deep) 100%);
+  color: var(--cream);
+  border-radius: var(--radius-lg);
+  padding: clamp(3rem, 7vw, 5rem);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-block::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(250, 246, 240, 0.08);
+}
+.cta-block::after {
+  content: "";
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(74, 171, 140, 0.18);
+}
+.cta-block * { position: relative; z-index: 1; }
+.cta-block h2 { color: var(--cream); margin-bottom: 1.5rem; }
+.cta-block p {
+  color: rgba(250, 246, 240, 0.9);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  font-size: 1.1rem;
+}
+.cta-block .btn-primary {
+  background: var(--cream);
+  color: var(--navy);
+}
+.cta-block .btn-primary:hover { background: var(--white); }
+
+
+/* ==========================================================================
+   14. PAGES INTÉRIEURES (header de page, prose)
+   ========================================================================== */
+
+.page-header {
+  padding: clamp(4rem, 8vw, 7rem) 0 clamp(2rem, 4vw, 3rem);
+  background:
+    radial-gradient(ellipse 50% 60% at 80% 30%, rgba(74, 171, 140, 0.15), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 15% 80%, rgba(200, 105, 62, 0.18), transparent 60%),
+    var(--cream);
+}
+.page-header h1 { max-width: 14ch; margin-top: 1rem; }
+.page-header p { font-size: 1.15rem; max-width: 620px; margin-top: 1.5rem; }
+
+.prose {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.prose p { margin-bottom: 1.25rem; font-size: 1.05rem; }
+.prose h2 { margin: 3rem 0 1rem; }
+.prose h3 { margin: 2.5rem 0 1rem; }
+.prose ul { padding-left: 1.5rem; margin: 1.25rem 0; }
+.prose li { margin-bottom: 0.6rem; color: var(--navy-soft); }
+.prose strong { color: var(--navy); }
+
+
+/* ==========================================================================
+   15. RÉSEAUX SOCIAUX (page Nous suivre)
+   ========================================================================== */
+
+.socials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.social-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.social-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+.social-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.social-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+  color: var(--navy);
+}
+.social-link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--orange);
+}
+
+/* Couleur des icônes Lucide */
+.social-icon .icon { color: var(--orange); }
+.social-card:hover .social-icon .icon { color: var(--orange-deep); }
+
+
+/* ==========================================================================
+   16. PAGE CONTACT
+   --------------------------------------------------------------------------
+   Section "Écrivez-nous" éditoriale (2 colonnes : texte + blob orange)
+   + 3 cartes réseaux sociaux en dessous.
+   ========================================================================== */
+
+.contact-write-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+@media (max-width: 800px) {
+  .contact-write-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.contact-write-text .eyebrow { margin-bottom: 1rem; }
+.contact-write-title {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+.contact-write-lede {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--navy-soft);
+  margin-bottom: 2rem;
+  max-width: 520px;
+}
+.contact-write-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 1.75rem;
+}
+.contact-write-mailto {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--navy);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--orange);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+  word-break: break-all;
+}
+.contact-write-mailto:hover {
+  color: var(--orange);
+  border-color: var(--orange-deep);
+}
+
+/* Blob orange animé + icône au centre */
+.contact-write-visual {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact-write-blob {
+  position: absolute;
+  inset: 0;
+  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  background: linear-gradient(135deg, var(--orange-soft) 0%, var(--orange) 60%, var(--orange-deep) 100%);
+  box-shadow: 0 30px 60px -20px rgba(200, 105, 62, 0.45);
+  animation: blobFloat 8s ease-in-out infinite;
+}
+@keyframes blobFloat {
+  0%, 100% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    border-radius: 60% 40% 40% 60% / 55% 65% 35% 45%;
+    transform: translateY(-8px) rotate(-3deg);
+  }
+}
+.contact-write-icon {
+  position: relative;
+  width: clamp(4rem, 10vw, 6rem);
+  height: clamp(4rem, 10vw, 6rem);
+  color: var(--cream);
+  z-index: 1;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+}
+
+/* 3 options réseaux sociaux en dessous */
+.contact-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+@media (max-width: 720px) {
+  .contact-options { grid-template-columns: 1fr; gap: 1rem; }
+}
+.contact-option {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--navy);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  display: block;
+}
+.contact-option:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--orange);
+}
+.contact-option-icon {
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+  line-height: 1;
+}
+.contact-option-label {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+.contact-option-handle {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+/* Couleur des icônes Lucide dans les cartes contact */
+.contact-option-icon .icon { color: var(--orange); }
+.contact-option:hover .contact-option-icon .icon { color: var(--orange-deep); }
+
+
+/* ==========================================================================
+   17. FOOTER
+   ========================================================================== */
+
+.footer {
+  background: var(--navy);
+  color: rgba(250, 246, 240, 0.75);
+  padding: 5rem 0 2rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+@media (max-width: 800px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 500px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+.footer h4 {
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.footer ul { list-style: none; padding: 0; }
+.footer ul li { margin-bottom: 0.7rem; }
+.footer ul a {
+  color: rgba(250, 246, 240, 0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+.footer ul a:hover { color: var(--orange-soft); }
+
+.footer-brand p {
+  color: rgba(250, 246, 240, 0.7);
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  max-width: 320px;
+}
+.footer-brand-subtitle {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(250, 246, 240, 0.5);
+  margin-top: 0.4rem;
+}
+
+.footer .brand-text,
+.footer .footer-brand .brand-text.multi-line {
+  color: var(--cream);
+}
+
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(250, 246, 240, 0.15);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: rgba(250, 246, 240, 0.5);
+}
+
+/* Badge crème circulaire pour le logo dans le footer (fond navy) */
+.brand-logo-footer-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  background: var(--cream);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+.brand-logo-footer-badge img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+
+/* ==========================================================================
+   18. ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeUp 0.8s ease-out both; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+
+/* ==========================================================================
+   19. ACCESSIBILITÉ
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .contact-write-blob { animation: none; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
