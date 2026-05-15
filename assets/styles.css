@@ -820,6 +820,27 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   transform: translateX(4px);
 }
 
+/* Images réelles dans les cartes événements */
+.event-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay subtil pour garder le style éditorial */
+.event-card-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      rgba(31,45,61,0.18),
+      rgba(31,45,61,0.02)
+    );
+  pointer-events: none;
+}
+
 
 /* ==========================================================================
    11. COMITÉS
