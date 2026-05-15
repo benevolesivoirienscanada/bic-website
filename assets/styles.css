@@ -1218,9 +1218,11 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
 .prose li { margin-bottom: 0.6rem; color: var(--navy-soft); }
 .prose strong { color: var(--navy); }
 
-/* ----- Formulaire intégré (iframe Google Forms) ----- */
+/* ----- Formulaire intégré (iframe Google Forms avec encart d'accueil) ----- */
+
+/* Conteneur principal : carte blanche avec ombre */
 .form-embed {
-  max-width: 760px;
+  max-width: 720px;
   margin: 0 auto;
   background: var(--white);
   border-radius: var(--radius-lg);
@@ -1228,35 +1230,97 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   box-shadow: var(--shadow-md);
   overflow: hidden;
 }
-.form-embed iframe {
-  display: block;
-  width: 100%;
-  height: 1400px;
-  border: 0;
-  /* Le Google Form a son propre fond blanc, pas besoin d'ajouter quoi que ce soit */
-}
-.form-embed-fallback {
+
+/* Encart d'accueil affiché avant que l'utilisateur ne commence */
+.form-intro {
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 3rem);
   text-align: center;
-  padding: 1rem 1.5rem 1.5rem;
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--muted);
-  border-top: 1px solid var(--line);
 }
-.form-embed-fallback a {
+.form-intro-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  background: var(--cream-warm);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+}
+.form-intro-icon .icon {
+  width: 32px;
+  height: 32px;
+  color: var(--orange);
+}
+.form-intro-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  margin-bottom: 1.5rem;
+  line-height: 1.15;
+}
+.form-intro-lede {
+  font-size: 1rem;
+  color: var(--navy-soft);
+  margin-bottom: 1rem;
+}
+.form-intro-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 2rem;
+  max-width: 480px;
+  text-align: left;
+}
+.form-intro-list li {
+  padding: 0.6rem 0 0.6rem 1.75rem;
+  position: relative;
+  color: var(--navy-soft);
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--line);
+}
+.form-intro-list li:last-child {
+  border-bottom: 0;
+}
+.form-intro-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.2rem;
+  width: 10px;
+  height: 1.5px;
+  background: var(--orange);
+}
+.form-intro-list strong {
+  color: var(--navy);
+  font-weight: 600;
+}
+.form-intro-btn {
+  margin-bottom: 1.25rem;
+}
+.form-intro-fallback {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.form-intro-fallback a {
   color: var(--orange);
   text-decoration: none;
   font-weight: 600;
   border-bottom: 1px dashed var(--orange);
 }
-.form-embed-fallback a:hover {
+.form-intro-fallback a:hover {
   color: var(--orange-deep);
   border-color: var(--orange-deep);
 }
 
-/* Sur petits écrans : iframe plus haute pour éviter le scroll interne pénible au doigt */
+/* Wrap qui héberge l'iframe une fois révélée */
+.form-iframe-wrap iframe {
+  display: block;
+  width: 100%;
+  height: 1400px;
+  border: 0;
+}
+
+/* Sur petits écrans : iframe plus haute pour limiter le scroll interne */
 @media (max-width: 640px) {
-  .form-embed iframe { height: 1700px; }
+  .form-iframe-wrap iframe { height: 1700px; }
 }
 
 
