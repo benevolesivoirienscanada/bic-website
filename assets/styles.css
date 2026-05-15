@@ -203,17 +203,21 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   color: var(--navy);
   min-width: 0; /* permet au texte de tronquer si manque de place */
 }
-.brand:hover .brand-logo {
-  transform: scale(1.04);
-  transition: transform 0.25s;
-}
 
 .brand-logo {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   flex-shrink: 0;
   object-fit: contain;
-  transition: transform 0.25s;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  /* Effet "flottant" : ombre douce qui donne du relief sans dominer */
+  filter: drop-shadow(0 4px 10px rgba(31, 45, 61, 0.12))
+          drop-shadow(0 2px 4px rgba(31, 45, 61, 0.08));
+}
+.brand:hover .brand-logo {
+  transform: scale(1.04) translateY(-1px);
+  filter: drop-shadow(0 6px 14px rgba(31, 45, 61, 0.18))
+          drop-shadow(0 3px 6px rgba(31, 45, 61, 0.10));
 }
 
 .brand-text {
@@ -338,13 +342,19 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 3; /* au-dessus du panneau du menu et du voile flou */
 }
+
+/* 3 barres : 1 span pour la barre du milieu, et ::before/::after pour les 2 autres.
+   Toutes les transitions partagent la même durée pour synchroniser l'animation. */
 .nav-toggle span {
   position: relative;
   display: block;
   width: 22px;
   height: 2px;
   background: var(--navy);
+  transition: background 0.25s ease, opacity 0.2s ease;
 }
 .nav-toggle span::before,
 .nav-toggle span::after {
@@ -354,9 +364,23 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   width: 22px;
   height: 2px;
   background: var(--navy);
+  transition: transform 0.25s ease;
+  transform-origin: center;
 }
 .nav-toggle span::before { top: -7px; }
 .nav-toggle span::after  { top: 7px; }
+
+/* État ouvert : la barre du milieu disparaît,
+   les barres haut/bas rotent pour former une croix (×). */
+.nav.open .nav-toggle span {
+  background: transparent;
+}
+.nav.open .nav-toggle span::before {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav.open .nav-toggle span::after {
+  transform: translateY(-7px) rotate(-45deg);
+}
 
 /* ----- Responsive : mobile ----- */
 @media (max-width: 900px) {
@@ -379,10 +403,35 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
     font-size: 0.78rem;
   }
 
+  /* ─── Menu mobile ouvert : voile flou + panneau déroulant ─────────── */
+
+  /* Voile flou — élément placé directement sur <body> par JS pour échapper
+     au piège du backdrop-filter de .nav (qui capture position:fixed).
+     Z-indexes : voile (40) < .nav (50) — le voile recouvre tout le reste de la page,
+     mais le menu reste cliquable car il est dans .nav. */
+  .nav-overlay {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 45, 61, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-out;
+  }
+  .nav-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   /* Panneau déroulant des liens, sous la barre */
   .nav.open .nav-menu {
     display: flex;
-    position: absolute;
+    position: fixed;
     top: var(--nav-height);
     left: 0;
     right: 0;
@@ -391,11 +440,28 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
     padding: 1.5rem var(--gutter);
     max-height: calc(100vh - var(--nav-height));
     overflow-y: auto;
+    z-index: 2;
+    box-shadow: 0 8px 24px rgba(31, 45, 61, 0.12);
+    animation: slideDown 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   .nav.open .nav-links {
     flex-direction: column;
     width: 100%;
     gap: 1rem;
+  }
+  .nav.open .nav-links a {
+    padding: 0.6rem 0;
+    font-size: 1rem;
   }
 }
 
@@ -405,8 +471,8 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
     gap: 0.5rem;
   }
   .brand-logo {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
   }
   .brand-text.multi-line {
     font-size: 0.66rem;
@@ -425,6 +491,37 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   }
   .nav-actions {
     gap: 0.4rem;
+  }
+}
+
+/* Très petits téléphones (iPhone SE 1st gen, vieux Android) : encore plus compact
+   pour éviter le chevauchement entre brand et zone actions. */
+@media (max-width: 360px) {
+  .nav-inner {
+    gap: 0.35rem;
+  }
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+  .brand-text.multi-line {
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+  }
+  .nav-lang {
+    /* Cache l'icône globe pour économiser l'espace, on garde juste "EN" ou "FR" */
+    padding: 0 0.55rem;
+    font-size: 0.65rem;
+  }
+  .nav-lang::before {
+    display: none;
+  }
+  .nav-cta {
+    padding: 0 0.55rem;
+    font-size: 0.65rem;
+  }
+  .nav-actions {
+    gap: 0.3rem;
   }
 }
 
@@ -680,78 +777,311 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
 
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 2rem;
+
+  /* responsive premium */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+
+  gap: clamp(1.5rem, 3vw, 2rem);
+
   align-items: stretch;
 }
 
+/* ==========================================================================
+   CARD
+   ========================================================================== */
+
 .event-card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.event-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-}
-.event-card-img {
-  aspect-ratio: 4/3;
-  background: linear-gradient(135deg, var(--orange-soft), var(--orange));
-  display: grid;
-  place-items: center;
-  font-size: 4rem;
   position: relative;
+
+  background: var(--white);
+
+  border-radius: var(--radius-lg);
+
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s ease,
+    border-color 0.3s ease;
 }
+
+/* Glow subtil premium */
+.event-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.22),
+      transparent 30%
+    );
+
+  opacity: 0;
+
+  transition: opacity 0.35s ease;
+
+  z-index: 2;
+}
+
+.event-card:hover {
+  transform: translateY(-8px);
+
+  box-shadow:
+    0 10px 24px rgba(31,45,61,0.08),
+    0 22px 60px rgba(31,45,61,0.10);
+
+  border-color: rgba(200,105,62,0.18);
+}
+
+.event-card:hover::before {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   IMAGE
+   ========================================================================== */
+
+.event-card-img {
+  position: relative;
+
+  width: 100%;
+
+  /* ratio desktop premium */
+  aspect-ratio: 16 / 10;
+
+  overflow: hidden;
+
+  background: var(--cream-warm);
+
+  isolation: isolate;
+}
+
+/* fallback gradients si pas d'image */
 .event-card-img.variant-teal {
-  background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+  background: linear-gradient(
+    135deg,
+    var(--teal),
+    var(--teal-deep)
+  );
 }
+
 .event-card-img.variant-navy {
-  background: linear-gradient(135deg, var(--navy-soft), var(--navy));
+  background: linear-gradient(
+    135deg,
+    var(--navy-soft),
+    var(--navy)
+  );
 }
+
+/* image réelle */
+.event-card-img img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+
+  transform: scale(1.001);
+
+  transition:
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.5s ease;
+}
+
+/* effet hover premium desktop */
+.event-card:hover .event-card-img img {
+  transform: scale(1.06);
+
+  filter:
+    saturate(1.04)
+    contrast(1.02);
+}
+
+/* overlay éditorial luxe */
+.event-card-img::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(15,20,30,0.34),
+      rgba(15,20,30,0.10) 38%,
+      rgba(255,255,255,0.03)
+    );
+
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+/* ==========================================================================
+   BODY
+   ========================================================================== */
+
 .event-card-body {
-  padding: 1.75rem;
+  position: relative;
+
+  padding: clamp(1.4rem, 3vw, 1.75rem);
+
   flex-grow: 1;
+
   display: flex;
   flex-direction: column;
 }
+
 .event-card-date {
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
+  font-size: 0.74rem;
+
+  letter-spacing: 0.18em;
+
   text-transform: uppercase;
+
   color: var(--orange);
+
   font-weight: 700;
-  margin-bottom: 0.8rem;
+
+  margin-bottom: 0.9rem;
 }
+
 .event-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 0.8rem;
+  font-size: clamp(1.25rem, 2vw, 1.45rem);
+
+  line-height: 1.15;
+
+  margin-bottom: 0.85rem;
+
+  text-wrap: balance;
 }
+
 .event-card p {
-  font-size: 0.95rem;
+  font-size: 0.97rem;
+
+  color: var(--navy-soft);
+
   flex-grow: 1;
 }
+
+/* ==========================================================================
+   LINK
+   ========================================================================== */
+
 .event-card-link {
-  margin-top: 1.25rem;
-  font-size: 0.9rem;
+  margin-top: 1.5rem;
+
+  font-size: 0.92rem;
+
   font-weight: 600;
+
   color: var(--navy);
+
   text-decoration: none;
+
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
+
+  transition:
+    color 0.25s ease,
+    gap 0.25s ease;
 }
+
 .event-card-link::after {
   content: "→";
-  transition: transform 0.2s;
+
+  transition: transform 0.25s ease;
 }
+
+.event-card:hover .event-card-link {
+  color: var(--orange);
+  gap: 0.6rem;
+}
+
 .event-card:hover .event-card-link::after {
-  transform: translateX(4px);
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+  .events-grid {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(280px, 1fr)
+    );
+  }
+
+  .event-card-img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 640px) {
+
+  .events-grid {
+    grid-template-columns: 1fr;
+
+    gap: 1.25rem;
+  }
+
+  .event-card {
+    border-radius: 20px;
+  }
+
+  .event-card-img {
+    aspect-ratio: 4 / 3;
+
+    min-height: 220px;
+  }
+
+  /* pas de zoom agressif mobile */
+  .event-card:hover {
+    transform: none;
+  }
+
+  .event-card:hover .event-card-img img {
+    transform: none;
+    filter: none;
+  }
+
+  .event-card-body {
+    padding: 1.35rem;
+  }
+
+  .event-card h3 {
+    font-size: 1.28rem;
+  }
+
+  .event-card p {
+    font-size: 0.94rem;
+  }
 }
 
 
@@ -918,6 +1248,118 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
 .prose ul { padding-left: 1.5rem; margin: 1.25rem 0; }
 .prose li { margin-bottom: 0.6rem; color: var(--navy-soft); }
 .prose strong { color: var(--navy); }
+
+/* ----- Formulaire intégré (iframe Google Forms avec encart d'accueil) ----- */
+
+/* Conteneur principal : carte blanche avec ombre */
+.form-embed {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+/* Encart d'accueil affiché avant que l'utilisateur ne commence */
+.form-intro {
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 3rem);
+  text-align: center;
+}
+.form-intro-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  background: var(--cream-warm);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+}
+.form-intro-icon .icon {
+  width: 32px;
+  height: 32px;
+  color: var(--orange);
+}
+.form-intro-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  margin-bottom: 1.5rem;
+  line-height: 1.15;
+}
+.form-intro-lede {
+  font-size: 1rem;
+  color: var(--navy-soft);
+  margin-bottom: 1rem;
+}
+.form-intro-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 2rem;
+  max-width: 480px;
+  text-align: left;
+}
+.form-intro-list li {
+  padding: 0.6rem 0 0.6rem 1.75rem;
+  position: relative;
+  color: var(--navy-soft);
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--line);
+  /* Permet aux mots longs (emails, URLs) de casser proprement */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.form-intro-list li:last-child {
+  border-bottom: 0;
+}
+.form-intro-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.2rem;
+  width: 10px;
+  height: 1.5px;
+  background: var(--orange);
+}
+.form-intro-list strong {
+  color: var(--navy);
+  font-weight: 600;
+}
+.form-intro-btn {
+  margin-bottom: 1.25rem;
+  /* Sur très petits écrans, autorise le retour à la ligne du texte du bouton */
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+.form-intro-fallback {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.form-intro-fallback a {
+  color: var(--orange);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px dashed var(--orange);
+}
+.form-intro-fallback a:hover {
+  color: var(--orange-deep);
+  border-color: var(--orange-deep);
+}
+
+/* Wrap qui héberge l'iframe une fois révélée */
+.form-iframe-wrap iframe {
+  display: block;
+  width: 100%;
+  height: 1400px;
+  border: 0;
+}
+
+/* Sur petits écrans : iframe plus haute pour limiter le scroll interne */
+@media (max-width: 640px) {
+  .form-iframe-wrap iframe { height: 1700px; }
+}
 
 
 /* ==========================================================================

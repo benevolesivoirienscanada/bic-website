@@ -25,9 +25,8 @@ const SOCIAL = {
   tiktok: 'https://www.tiktok.com/@benevolesivoirienscanada',
 };
 
-// Formulaires externes
+// Liens externes (le formulaire d'adhésion est désormais intégré sur une page locale)
 const LINKS = {
-  membership: 'https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header',
   donate: 'https://www.zeffy.com/fr-CA/ticketing/cotisation-annuelle-2026-2027-benevoles-ivoiriens-du-canada-bic',
 };
 
@@ -40,6 +39,7 @@ const PAGES = {
   events:     { fr: '/evenements.html',   en: '/en/events.html' },
   volunteer:  { fr: '/benevoles.html',    en: '/en/volunteer.html' },
   contact:    { fr: '/contact.html',      en: '/en/contact.html' },
+  membership: { fr: '/adhesion.html',     en: '/en/membership.html' },
 };
 
 // Traductions — texte par langue
@@ -106,7 +106,7 @@ const T = {
       ],
       membershipLabel: 'Membership',
       socialTitle: 'Social',
-      copyright: 'Ivorian Volunteers of Canada. All rights reserved.',
+      copyright: 'Bénévoles Ivoiriens du Canada. All rights reserved.',
       regions: 'Montréal · Gatineau · Québec',
     },
   },
@@ -180,7 +180,7 @@ class BicNav extends HTMLElement {
     <!-- Zone DROITE : Actions (langue + CTA + hamburger mobile) -->
     <div class="nav-actions">
       <a class="nav-lang" href="${otherLangUrl}" hreflang="${otherLang}" aria-label="${esc(t.langToggleLabel)}">${otherLangLabel}</a>
-      <a class="nav-cta" href="${LINKS.membership}" target="_blank" rel="noopener">${esc(t.join)}</a>
+      <a class="nav-cta" href="${PAGES.membership[lang]}">${esc(t.join)}</a>
       <button class="nav-toggle" aria-label="${esc(t.openMenu)}" aria-expanded="false"><span></span></button>
     </div>
 
@@ -236,7 +236,7 @@ class BicFooter extends HTMLElement {
         <h4>${esc(t.footer.communityTitle)}</h4>
         <ul>
           ${communityLinks}
-          <li><a href="${LINKS.membership}" target="_blank" rel="noopener">${esc(t.footer.membershipLabel)}</a></li>
+          <li><a href="${PAGES.membership[lang]}">${esc(t.footer.membershipLabel)}</a></li>
         </ul>
       </div>
       <div>
@@ -271,17 +271,57 @@ customElements.define('bic-footer', BicFooter);
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Menu mobile
+  // ─── Menu mobile ───────────────────────────────────────────────────
   const nav = document.querySelector('header.nav');
   const toggle = document.querySelector('.nav-toggle');
+
+  // Crée un voile flou cliquable directement sur <body> pour que son position:fixed
+  // soit en référence au viewport (et non au .nav qui a backdrop-filter, ce qui
+  // capture le position:fixed des descendants).
+  let overlay = document.querySelector('body > .nav-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    document.body.appendChild(overlay);
+  }
+
+  function setMenuOpen(open) {
+    if (!nav || !toggle) return;
+    nav.classList.toggle('open', open);
+    if (overlay) overlay.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    // Empêcher le scroll de la page derrière le menu ouvert
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
   if (toggle && nav) {
+    // Bouton hamburger : toggle
     toggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-      const expanded = nav.classList.contains('open');
-      toggle.setAttribute('aria-expanded', String(expanded));
+      setMenuOpen(!nav.classList.contains('open'));
     });
+
+    // Fermer en cliquant sur un lien du menu
     nav.querySelectorAll('.nav-links a').forEach((a) => {
-      a.addEventListener('click', () => nav.classList.remove('open'));
+      a.addEventListener('click', () => setMenuOpen(false));
+    });
+
+    // Fermer en cliquant sur le voile flou
+    if (overlay) {
+      overlay.addEventListener('click', () => setMenuOpen(false));
+    }
+
+    // Fermer avec la touche Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        setMenuOpen(false);
+      }
+    });
+
+    // Fermer si la fenêtre devient trop large (passe en mode desktop)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900 && nav.classList.contains('open')) {
+        setMenuOpen(false);
+      }
     });
   }
 

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Membership — BIC</title>
+  <meta name="description" content="Become a member of the Ivorian Volunteers of Canada in a few minutes.">
+  <meta name="theme-color" content="#C8693E">
+  <link rel="alternate" hreflang="fr" href="../adhesion.html">
+  <link rel="alternate" hreflang="en" href="membership.html">
+  <link rel="icon" type="image/png" href="../assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="../assets/icons.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <bic-nav lang="en" active="membership"></bic-nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="container">
+      <span class="eyebrow">Membership</span>
+      <h1>Join the BIC <span class="italic-accent" style="color: var(--orange);">family</span>.</h1>
+      <p>Fill out the form below in just a few minutes to become a member. You'll receive a confirmation by email.</p>
+    </div>
+  </section>
+
+  <!-- MEMBERSHIP FORM (intro card + iframe revealed on click) -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="form-embed" id="form-container">
+
+        <!-- Intro card shown by default -->
+        <div class="form-intro" id="form-intro">
+          <div class="form-intro-icon" aria-hidden="true">
+            <i class="icon icon-users"></i>
+          </div>
+          <h2 class="form-intro-title">A few minutes, and you're <span class="italic-accent" style="color: var(--orange);">one of us</span>.</h2>
+          <p class="form-intro-lede">Here's what to expect:</p>
+          <ul class="form-intro-list">
+            <li><strong>Time needed</strong>: about 3 minutes</li>
+            <li><strong>Information requested</strong>: name, email, phone, city and a few preferences</li>
+            <li><strong>Confirmation</strong> sent by email after submission</li>
+            <li><strong>Language</strong>: the form is currently in French only — feel free to write to us at <a href="mailto:secretariat@benevolesivoirienscanada.com" style="color: var(--orange);">secretariat@benevolesivoirienscanada.com</a> if you need help</li>
+          </ul>
+          <button class="btn btn-primary btn-arrow form-intro-btn" id="form-start-btn" type="button">
+            Start the form
+          </button>
+          <p class="form-intro-fallback">
+            Prefer to open it in a new tab? <a href="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header" target="_blank" rel="noopener">Open the form ↗</a>
+          </p>
+        </div>
+
+        <!-- Iframe hidden by default, loaded only on click -->
+        <div class="form-iframe-wrap" id="form-iframe-wrap" hidden>
+          <iframe
+            id="form-iframe"
+            data-src="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?embedded=true"
+            title="BIC Membership Form">
+            Loading form…
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightweight script to reveal iframe on button click -->
+  <script>
+    (function() {
+      const btn = document.getElementById('form-start-btn');
+      const intro = document.getElementById('form-intro');
+      const wrap = document.getElementById('form-iframe-wrap');
+      const iframe = document.getElementById('form-iframe');
+      if (!btn || !intro || !wrap || !iframe) return;
+      btn.addEventListener('click', function() {
+        // Load the form only now (lazy)
+        if (!iframe.src && iframe.dataset.src) iframe.src = iframe.dataset.src;
+        intro.hidden = true;
+        wrap.hidden = false;
+        // Smooth scroll to iframe (useful on mobile)
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
+  </script>
+
+  <!-- FOOTER -->
+  <bic-footer lang="en"></bic-footer>
+
+  <script src="../assets/components.js" defer></script>
+</body>
+</html>
