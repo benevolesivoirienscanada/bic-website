@@ -26,28 +26,67 @@
       <span class="eyebrow">Membership</span>
       <h1>Join the BIC <span class="italic-accent" style="color: var(--orange);">family</span>.</h1>
       <p>Fill out the form below in just a few minutes to become a member. You'll receive a confirmation by email.</p>
-      <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--muted);">
-        <em>Note: the form is currently in French only. If you need help, write to us at <a href="mailto:secretariat@benevolesivoirienscanada.com" style="color: var(--orange);">secretariat@benevolesivoirienscanada.com</a>.</em>
-      </p>
     </div>
   </section>
 
-  <!-- MEMBERSHIP FORM (Google Forms iframe) -->
+  <!-- MEMBERSHIP FORM (intro card + iframe revealed on click) -->
   <section style="padding-top: 0;">
     <div class="container">
-      <div class="form-embed">
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?embedded=true"
-          title="BIC Membership Form"
-          loading="lazy">
-          Loading form…
-        </iframe>
-        <p class="form-embed-fallback">
-          Form not loading? <a href="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header" target="_blank" rel="noopener">Open in a new tab ↗</a>
-        </p>
+      <div class="form-embed" id="form-container">
+
+        <!-- Intro card shown by default -->
+        <div class="form-intro" id="form-intro">
+          <div class="form-intro-icon" aria-hidden="true">
+            <i class="icon icon-users"></i>
+          </div>
+          <h2 class="form-intro-title">A few minutes, and you're <span class="italic-accent" style="color: var(--orange);">one of us</span>.</h2>
+          <p class="form-intro-lede">Here's what to expect:</p>
+          <ul class="form-intro-list">
+            <li><strong>Time needed</strong>: about 3 minutes</li>
+            <li><strong>Information requested</strong>: name, email, phone, city and a few preferences</li>
+            <li><strong>Confirmation</strong> sent by email after submission</li>
+            <li><strong>Language</strong>: the form is currently in French only — feel free to write to us at <a href="mailto:secretariat@benevolesivoirienscanada.com" style="color: var(--orange);">secretariat@benevolesivoirienscanada.com</a> if you need help</li>
+          </ul>
+          <button class="btn btn-primary btn-arrow form-intro-btn" id="form-start-btn" type="button">
+            Start the form
+          </button>
+          <p class="form-intro-fallback">
+            Prefer to open it in a new tab? <a href="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header" target="_blank" rel="noopener">Open the form ↗</a>
+          </p>
+        </div>
+
+        <!-- Iframe hidden by default, loaded only on click -->
+        <div class="form-iframe-wrap" id="form-iframe-wrap" hidden>
+          <iframe
+            id="form-iframe"
+            data-src="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?embedded=true"
+            title="BIC Membership Form">
+            Loading form…
+          </iframe>
+        </div>
+
       </div>
     </div>
   </section>
+
+  <!-- Lightweight script to reveal iframe on button click -->
+  <script>
+    (function() {
+      const btn = document.getElementById('form-start-btn');
+      const intro = document.getElementById('form-intro');
+      const wrap = document.getElementById('form-iframe-wrap');
+      const iframe = document.getElementById('form-iframe');
+      if (!btn || !intro || !wrap || !iframe) return;
+      btn.addEventListener('click', function() {
+        // Load the form only now (lazy)
+        if (!iframe.src && iframe.dataset.src) iframe.src = iframe.dataset.src;
+        intro.hidden = true;
+        wrap.hidden = false;
+        // Smooth scroll to iframe (useful on mobile)
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
+  </script>
 
   <!-- FOOTER -->
   <bic-footer lang="en"></bic-footer>
