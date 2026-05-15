@@ -167,11 +167,11 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
    05. NAVIGATION
    --------------------------------------------------------------------------
    Structure 3 zones en desktop :
-     [ LOGO + Brand text ]   [ Menu pages centré ]   [ EN | S'engager ]
+     [ LOGO + Brand text ]   [ Menu pages centré ]   [ EN | Rejoindre BIC ]
             gauche                   centre                  droite
 
    En mobile (< 900px) :
-     [ LOGO + Brand text ]                          [ EN | S'engager | ☰ ]
+     [ LOGO + Brand text ]                          [ EN | Rejoindre BIC | ☰ ]
      Le menu pages devient un panneau déroulant via le hamburger.
    ========================================================================== */
 
@@ -277,7 +277,7 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   background: var(--orange);
 }
 
-/* ----- Zone DROITE : Actions (EN + S'engager) ----- */
+/* ----- Zone DROITE : Actions (EN + Rejoindre BIC) ----- */
 .nav-actions {
   display: flex;
   align-items: center;
@@ -285,7 +285,7 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   flex-shrink: 0;
 }
 
-/* Boutons EN et S'engager — taille uniforme (height + padding identiques) */
+/* Boutons EN et Rejoindre BIC — taille uniforme (height + padding identiques) */
 .nav-lang,
 .nav-cta {
   display: inline-flex;
@@ -324,7 +324,7 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   background: rgba(200, 105, 62, 0.06);
 }
 
-/* Bouton "S'engager" : plein navy */
+/* Bouton "Rejoindre BIC" : plein navy */
 .nav-cta {
   background: var(--navy);
   color: var(--cream);
@@ -385,7 +385,7 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
 /* ----- Responsive : mobile ----- */
 @media (max-width: 900px) {
   /* En mobile : on cache le menu central, le hamburger apparaît dans la zone droite.
-     Les boutons EN et S'engager restent visibles dans la barre. */
+     Les boutons EN et Rejoindre BIC restent visibles dans la barre. */
   .nav-menu { display: none; }
   .nav-toggle { display: flex; }
 
