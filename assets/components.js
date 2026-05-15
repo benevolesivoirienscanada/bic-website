@@ -47,7 +47,7 @@ const T = {
   fr: {
     brandLine: 'Bénévoles Ivoiriens du Canada',
     logoAlt: 'Logo BIC',
-    join: 'Rejoindre BIC',
+    join: 'S\'engager',
     openMenu: 'Ouvrir le menu',
     langToggleLabel: 'English version',
     nav: {
@@ -271,17 +271,57 @@ customElements.define('bic-footer', BicFooter);
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Menu mobile
+  // ─── Menu mobile ───────────────────────────────────────────────────
   const nav = document.querySelector('header.nav');
   const toggle = document.querySelector('.nav-toggle');
+
+  // Crée un voile flou cliquable directement sur <body> pour que son position:fixed
+  // soit en référence au viewport (et non au .nav qui a backdrop-filter, ce qui
+  // capture le position:fixed des descendants).
+  let overlay = document.querySelector('body > .nav-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    document.body.appendChild(overlay);
+  }
+
+  function setMenuOpen(open) {
+    if (!nav || !toggle) return;
+    nav.classList.toggle('open', open);
+    if (overlay) overlay.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    // Empêcher le scroll de la page derrière le menu ouvert
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
   if (toggle && nav) {
+    // Bouton hamburger : toggle
     toggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-      const expanded = nav.classList.contains('open');
-      toggle.setAttribute('aria-expanded', String(expanded));
+      setMenuOpen(!nav.classList.contains('open'));
     });
+
+    // Fermer en cliquant sur un lien du menu
     nav.querySelectorAll('.nav-links a').forEach((a) => {
-      a.addEventListener('click', () => nav.classList.remove('open'));
+      a.addEventListener('click', () => setMenuOpen(false));
+    });
+
+    // Fermer en cliquant sur le voile flou
+    if (overlay) {
+      overlay.addEventListener('click', () => setMenuOpen(false));
+    }
+
+    // Fermer avec la touche Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        setMenuOpen(false);
+      }
+    });
+
+    // Fermer si la fenêtre devient trop large (passe en mode desktop)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900 && nav.classList.contains('open')) {
+        setMenuOpen(false);
+      }
     });
   }
 

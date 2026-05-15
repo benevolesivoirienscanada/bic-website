@@ -167,11 +167,11 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
    05. NAVIGATION
    --------------------------------------------------------------------------
    Structure 3 zones en desktop :
-     [ LOGO + Brand text ]   [ Menu pages centré ]   [ EN | Rejoindre BIC ]
+     [ LOGO + Brand text ]   [ Menu pages centré ]   [ EN | S'engager ]
             gauche                   centre                  droite
 
    En mobile (< 900px) :
-     [ LOGO + Brand text ]                          [ EN | Rejoindre BIC | ☰ ]
+     [ LOGO + Brand text ]                          [ EN | S'engager | ☰ ]
      Le menu pages devient un panneau déroulant via le hamburger.
    ========================================================================== */
 
@@ -203,17 +203,21 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   color: var(--navy);
   min-width: 0; /* permet au texte de tronquer si manque de place */
 }
-.brand:hover .brand-logo {
-  transform: scale(1.04);
-  transition: transform 0.25s;
-}
 
 .brand-logo {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   flex-shrink: 0;
   object-fit: contain;
-  transition: transform 0.25s;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  /* Effet "flottant" : ombre douce qui donne du relief sans dominer */
+  filter: drop-shadow(0 4px 10px rgba(31, 45, 61, 0.12))
+          drop-shadow(0 2px 4px rgba(31, 45, 61, 0.08));
+}
+.brand:hover .brand-logo {
+  transform: scale(1.04) translateY(-1px);
+  filter: drop-shadow(0 6px 14px rgba(31, 45, 61, 0.18))
+          drop-shadow(0 3px 6px rgba(31, 45, 61, 0.10));
 }
 
 .brand-text {
@@ -273,7 +277,7 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   background: var(--orange);
 }
 
-/* ----- Zone DROITE : Actions (EN + Rejoindre BIC) ----- */
+/* ----- Zone DROITE : Actions (EN + S'engager) ----- */
 .nav-actions {
   display: flex;
   align-items: center;
@@ -281,7 +285,7 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   flex-shrink: 0;
 }
 
-/* Boutons EN et Rejoindre BIC — taille uniforme (height + padding identiques) */
+/* Boutons EN et S'engager — taille uniforme (height + padding identiques) */
 .nav-lang,
 .nav-cta {
   display: inline-flex;
@@ -320,7 +324,7 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   background: rgba(200, 105, 62, 0.06);
 }
 
-/* Bouton "Rejoindre BIC" : plein navy */
+/* Bouton "S'engager" : plein navy */
 .nav-cta {
   background: var(--navy);
   color: var(--cream);
@@ -338,13 +342,19 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 3; /* au-dessus du panneau du menu et du voile flou */
 }
+
+/* 3 barres : 1 span pour la barre du milieu, et ::before/::after pour les 2 autres.
+   Toutes les transitions partagent la même durée pour synchroniser l'animation. */
 .nav-toggle span {
   position: relative;
   display: block;
   width: 22px;
   height: 2px;
   background: var(--navy);
+  transition: background 0.25s ease, opacity 0.2s ease;
 }
 .nav-toggle span::before,
 .nav-toggle span::after {
@@ -354,14 +364,28 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   width: 22px;
   height: 2px;
   background: var(--navy);
+  transition: transform 0.25s ease;
+  transform-origin: center;
 }
 .nav-toggle span::before { top: -7px; }
 .nav-toggle span::after  { top: 7px; }
 
+/* État ouvert : la barre du milieu disparaît,
+   les barres haut/bas rotent pour former une croix (×). */
+.nav.open .nav-toggle span {
+  background: transparent;
+}
+.nav.open .nav-toggle span::before {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav.open .nav-toggle span::after {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 /* ----- Responsive : mobile ----- */
 @media (max-width: 900px) {
   /* En mobile : on cache le menu central, le hamburger apparaît dans la zone droite.
-     Les boutons EN et Rejoindre BIC restent visibles dans la barre. */
+     Les boutons EN et S'engager restent visibles dans la barre. */
   .nav-menu { display: none; }
   .nav-toggle { display: flex; }
 
@@ -379,10 +403,35 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
     font-size: 0.78rem;
   }
 
+  /* ─── Menu mobile ouvert : voile flou + panneau déroulant ─────────── */
+
+  /* Voile flou — élément placé directement sur <body> par JS pour échapper
+     au piège du backdrop-filter de .nav (qui capture position:fixed).
+     Z-indexes : voile (40) < .nav (50) — le voile recouvre tout le reste de la page,
+     mais le menu reste cliquable car il est dans .nav. */
+  .nav-overlay {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 45, 61, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-out;
+  }
+  .nav-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   /* Panneau déroulant des liens, sous la barre */
   .nav.open .nav-menu {
     display: flex;
-    position: absolute;
+    position: fixed;
     top: var(--nav-height);
     left: 0;
     right: 0;
@@ -391,11 +440,28 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
     padding: 1.5rem var(--gutter);
     max-height: calc(100vh - var(--nav-height));
     overflow-y: auto;
+    z-index: 2;
+    box-shadow: 0 8px 24px rgba(31, 45, 61, 0.12);
+    animation: slideDown 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   .nav.open .nav-links {
     flex-direction: column;
     width: 100%;
     gap: 1rem;
+  }
+  .nav.open .nav-links a {
+    padding: 0.6rem 0;
+    font-size: 1rem;
   }
 }
 
@@ -405,8 +471,8 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
     gap: 0.5rem;
   }
   .brand-logo {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
   }
   .brand-text.multi-line {
     font-size: 0.66rem;
