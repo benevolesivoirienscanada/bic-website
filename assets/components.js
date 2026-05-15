@@ -106,7 +106,7 @@ const T = {
       ],
       membershipLabel: 'Membership',
       socialTitle: 'Social',
-      copyright: 'Ivorian Volunteers of Canada. All rights reserved.',
+      copyright: 'Bénévoles Ivoiriens du Canada. All rights reserved.',
       regions: 'Montréal · Gatineau · Québec',
     },
   },
