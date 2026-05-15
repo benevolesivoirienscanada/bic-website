@@ -25,9 +25,8 @@ const SOCIAL = {
   tiktok: 'https://www.tiktok.com/@benevolesivoirienscanada',
 };
 
-// Formulaires externes
+// Liens externes (le formulaire d'adhésion est désormais intégré sur une page locale)
 const LINKS = {
-  membership: 'https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header',
   donate: 'https://www.zeffy.com/fr-CA/ticketing/cotisation-annuelle-2026-2027-benevoles-ivoiriens-du-canada-bic',
 };
 
@@ -40,6 +39,7 @@ const PAGES = {
   events:     { fr: '/evenements.html',   en: '/en/events.html' },
   volunteer:  { fr: '/benevoles.html',    en: '/en/volunteer.html' },
   contact:    { fr: '/contact.html',      en: '/en/contact.html' },
+  membership: { fr: '/adhesion.html',     en: '/en/membership.html' },
 };
 
 // Traductions — texte par langue
@@ -180,7 +180,7 @@ class BicNav extends HTMLElement {
     <!-- Zone DROITE : Actions (langue + CTA + hamburger mobile) -->
     <div class="nav-actions">
       <a class="nav-lang" href="${otherLangUrl}" hreflang="${otherLang}" aria-label="${esc(t.langToggleLabel)}">${otherLangLabel}</a>
-      <a class="nav-cta" href="${LINKS.membership}" target="_blank" rel="noopener">${esc(t.join)}</a>
+      <a class="nav-cta" href="${PAGES.membership[lang]}">${esc(t.join)}</a>
       <button class="nav-toggle" aria-label="${esc(t.openMenu)}" aria-expanded="false"><span></span></button>
     </div>
 
@@ -236,7 +236,7 @@ class BicFooter extends HTMLElement {
         <h4>${esc(t.footer.communityTitle)}</h4>
         <ul>
           ${communityLinks}
-          <li><a href="${LINKS.membership}" target="_blank" rel="noopener">${esc(t.footer.membershipLabel)}</a></li>
+          <li><a href="${PAGES.membership[lang]}">${esc(t.footer.membershipLabel)}</a></li>
         </ul>
       </div>
       <div>

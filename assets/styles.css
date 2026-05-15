@@ -1218,6 +1218,47 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
 .prose li { margin-bottom: 0.6rem; color: var(--navy-soft); }
 .prose strong { color: var(--navy); }
 
+/* ----- Formulaire intégré (iframe Google Forms) ----- */
+.form-embed {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.form-embed iframe {
+  display: block;
+  width: 100%;
+  height: 1400px;
+  border: 0;
+  /* Le Google Form a son propre fond blanc, pas besoin d'ajouter quoi que ce soit */
+}
+.form-embed-fallback {
+  text-align: center;
+  padding: 1rem 1.5rem 1.5rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+}
+.form-embed-fallback a {
+  color: var(--orange);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px dashed var(--orange);
+}
+.form-embed-fallback a:hover {
+  color: var(--orange-deep);
+  border-color: var(--orange-deep);
+}
+
+/* Sur petits écrans : iframe plus haute pour éviter le scroll interne pénible au doigt */
+@media (max-width: 640px) {
+  .form-embed iframe { height: 1700px; }
+}
+
 
 /* ==========================================================================
    15. RÉSEAUX SOCIAUX (page Nous suivre)
