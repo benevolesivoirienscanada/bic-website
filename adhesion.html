@@ -29,22 +29,63 @@
     </div>
   </section>
 
-  <!-- FORMULAIRE D'ADHÉSION (iframe Google Forms) -->
+  <!-- FORMULAIRE D'ADHÉSION (intro card + iframe à dévoiler au clic) -->
   <section style="padding-top: 0;">
     <div class="container">
-      <div class="form-embed">
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?embedded=true"
-          title="Formulaire d'adhésion BIC"
-          loading="lazy">
-          Chargement du formulaire en cours…
-        </iframe>
-        <p class="form-embed-fallback">
-          Le formulaire ne s'affiche pas&nbsp;? <a href="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header" target="_blank" rel="noopener">Ouvrir dans un nouvel onglet ↗</a>
-        </p>
+      <div class="form-embed" id="form-container">
+
+        <!-- Encart d'accueil affiché par défaut -->
+        <div class="form-intro" id="form-intro">
+          <div class="form-intro-icon" aria-hidden="true">
+            <i class="icon icon-users"></i>
+          </div>
+          <h2 class="form-intro-title">Quelques minutes, et vous êtes des <span class="italic-accent" style="color: var(--orange);">nôtres</span>.</h2>
+          <p class="form-intro-lede">Voici ce qui vous attend&nbsp;:</p>
+          <ul class="form-intro-list">
+            <li><strong>Durée</strong> : environ 3 minutes</li>
+            <li><strong>Informations demandées</strong> : nom, courriel, téléphone, ville et quelques préférences</li>
+            <li><strong>Confirmation</strong> envoyée par courriel après l'envoi</li>
+          </ul>
+          <button class="btn btn-primary btn-arrow form-intro-btn" id="form-start-btn" type="button">
+            Commencer le formulaire
+          </button>
+          <p class="form-intro-fallback">
+            Vous préférez l'ouvrir dans un nouvel onglet&nbsp;? <a href="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?usp=header" target="_blank" rel="noopener">Ouvrir le formulaire ↗</a>
+          </p>
+        </div>
+
+        <!-- Iframe cachée par défaut, chargée seulement au clic -->
+        <div class="form-iframe-wrap" id="form-iframe-wrap" hidden>
+          <iframe
+            id="form-iframe"
+            data-src="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?embedded=true"
+            title="Formulaire d'adhésion BIC">
+            Chargement du formulaire en cours…
+          </iframe>
+        </div>
+
       </div>
     </div>
   </section>
+
+  <!-- Script léger pour révéler l'iframe au clic du bouton -->
+  <script>
+    (function() {
+      const btn = document.getElementById('form-start-btn');
+      const intro = document.getElementById('form-intro');
+      const wrap = document.getElementById('form-iframe-wrap');
+      const iframe = document.getElementById('form-iframe');
+      if (!btn || !intro || !wrap || !iframe) return;
+      btn.addEventListener('click', function() {
+        // Charge le formulaire seulement maintenant (lazy)
+        if (!iframe.src && iframe.dataset.src) iframe.src = iframe.dataset.src;
+        intro.hidden = true;
+        wrap.hidden = false;
+        // Scrolle doucement vers l'iframe (utile sur mobile)
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
+  </script>
 
   <!-- FOOTER -->
   <bic-footer lang="fr"></bic-footer>
