@@ -47,7 +47,7 @@ const T = {
   fr: {
     brandLine: 'Bénévoles Ivoiriens du Canada',
     logoAlt: 'Logo BIC',
-    join: 'S\'engager',
+    join: 'Rejoindre BIC',
     openMenu: 'Ouvrir le menu',
     langToggleLabel: 'English version',
     nav: {
