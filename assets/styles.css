@@ -1892,10 +1892,10 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   }
 
   /* If the last card is alone on its row (odd count), span both columns
-     so the layout doesn't end on a half-width orphan. */
+     so the layout doesn't end on a half-width orphan.
   .values-grid > .value:last-child:nth-child(odd) {
     grid-column: 1 / -1;
-  }
+  } */
 
   .value {
     padding: 1.1rem 0.95rem;
