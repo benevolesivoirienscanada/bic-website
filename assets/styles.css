@@ -1664,3 +1664,155 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+
+/* ==========================================================================
+   20. MOBILE UX REFINEMENTS
+   ========================================================================== */
+
+/* Mobile redesign:
+   - horizontal swipe rows
+   - denser cards
+   - faster scanning
+   - reduced scroll fatigue
+*/
+
+@media (max-width: 640px) {
+
+  /* ----------------------------------------------------------
+     Section rhythm
+     ---------------------------------------------------------- */
+
+  section {
+    padding-block: 4.5rem;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .section-header p {
+    font-size: 1rem;
+  }
+
+  /* ----------------------------------------------------------
+     Events → horizontal swipe row
+     ---------------------------------------------------------- */
+
+  .events-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 86%;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .events-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .event-card {
+    scroll-snap-align: start;
+    min-height: auto;
+  }
+
+  .event-card-body {
+    padding: 1.15rem;
+  }
+
+  .event-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .event-card p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .event-card-link {
+    margin-top: 1rem;
+  }
+
+  /* ----------------------------------------------------------
+     Committees → swipeable cards
+     ---------------------------------------------------------- */
+
+  .committee-list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 88%;
+    overflow-x: auto;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .committee-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .committee {
+    scroll-snap-align: start;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+
+  .committee h3 {
+    margin-bottom: 0.65rem;
+  }
+
+  .committee ul {
+    margin-top: 0.85rem;
+  }
+
+  .committee ul li {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    font-size: 0.93rem;
+  }
+
+  /* ----------------------------------------------------------
+     Values grid → denser layout
+     ---------------------------------------------------------- */
+
+  .values-grid {
+    gap: 1rem;
+  }
+
+  .value-card,
+  .values-grid > * {
+    padding: 1.25rem;
+  }
+
+  /* ----------------------------------------------------------
+     Typography tightening
+     ---------------------------------------------------------- */
+
+  h1 {
+    line-height: 1.02;
+  }
+
+  h2 {
+    line-height: 1.08;
+  }
+
+  .hero p,
+  .prose p {
+    font-size: 1rem;
+  }
+
+  /* ----------------------------------------------------------
+     Buttons
+     ---------------------------------------------------------- */
+
+  .btn {
+    min-height: 46px;
+    padding-inline: 1rem;
+  }
+}
