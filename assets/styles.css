@@ -1631,6 +1631,10 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
   object-fit: contain;
 }
 
+/* Footer social links: by default (desktop), labels show + icons hidden.
+   Mobile media query (section 20) flips this — icons show + labels hide. */
+.footer-social ul a > .icon { display: none; }
+
 
 /* ==========================================================================
    18. ANIMATIONS
@@ -1666,322 +1670,430 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
 }
 
 /* ==========================================================================
-   20. MOBILE UX REFINEMENTS
+   20. MOBILE UX REFINEMENTS — Premium compact mobile
+   --------------------------------------------------------------------------
+   Tighter typography, deliberate spacing, content-sized cards.
+   Cards no longer stretch to dead height; vertical air is earned, not given.
    ========================================================================== */
 
 @media (max-width: 640px) {
 
-  /* ----------------------------------------------------------
-     Global spacing
-     ---------------------------------------------------------- */
+  /* ─── Global spacing ────────────────────────────────────────── */
 
-  section {
-    padding-block: 3.5rem;
-  }
+  section { padding-block: 3rem; }
 
-  .section-header {
-    margin-bottom: 2rem;
-  }
+  .section-header { margin-bottom: 1.75rem; }
+  .section-header p { font-size: 1rem; }
 
-  .section-header p {
-    font-size: 1rem;
-  }
+  /* ─── Typography ────────────────────────────────────────────── */
 
-  /* ----------------------------------------------------------
-     Typography
-     ---------------------------------------------------------- */
-
-  h1 {
-    line-height: 1.02;
-  }
-
-  h2 {
-    line-height: 1.08;
-  }
+  h1 { line-height: 1.02; }
+  h2 { line-height: 1.08; }
 
   .hero p,
-  .prose p {
-    font-size: 1rem;
-  }
+  .prose p { font-size: 1rem; }
 
-  /* ----------------------------------------------------------
-     Hero tightening
-     ---------------------------------------------------------- */
+  /* ─── Hero ──────────────────────────────────────────────────── */
 
-  .hero {
-    padding-top: 2rem;
-  }
+  .hero { padding-top: 1.5rem; }
+  .hero h1 { margin: 0.75rem 0; }
+  .hero-lede { margin-bottom: 1.25rem; }
+  .hero-card { padding: 1.5rem; }
 
-  .hero h1 {
-    margin: 1rem 0;
-  }
-
-  .hero-lede {
-    margin-bottom: 1.5rem;
-  }
-
-  .hero-card {
-    padding: 1.5rem;
-  }
-
-  /* ----------------------------------------------------------
-     Buttons
-     ---------------------------------------------------------- */
+  /* ─── Buttons ───────────────────────────────────────────────── */
 
   .btn {
     min-height: 46px;
     padding-inline: 1rem;
   }
 
-  /* ----------------------------------------------------------
-     Events — horizontal swipe cards
-     ---------------------------------------------------------- */
+
+  /* ==========================================================
+     EVENT CARDS — premium horizontal swipe
+     ----------------------------------------------------------
+     Image less tall (5/4 instead of 4/3), cards size to content
+     instead of stretching to the tallest peer.
+     ========================================================== */
 
   .events-grid {
     display: grid;
+    grid-template-columns: none;
     grid-auto-flow: column;
-    grid-auto-columns: 78%;
+    grid-auto-columns: 82%;
+
     overflow-x: auto;
-    gap: 1rem;
+    gap: 0.85rem;
 
     padding-right: var(--gutter);
     padding-bottom: 0.5rem;
 
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+
+    align-items: start;          /* don't stretch — kills empty space */
   }
 
-  .events-grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  .events-grid::after {
-    content: "";
-    width: 0.5rem;
-  }
+  .events-grid::-webkit-scrollbar { display: none; }
+  .events-grid::after { content: ""; width: 0.5rem; }
 
   .event-card {
     scroll-snap-align: start;
+    height: auto;                /* override desktop 100% */
+    border-radius: 18px;
     min-height: auto;
-    border-radius: 20px;
   }
 
-  .event-card:hover {
-    transform: none;
-  }
-
+  .event-card:hover                  { transform: none; }
   .event-card:hover .event-card-img img {
     transform: none;
     filter: none;
   }
 
   .event-card-img {
-    aspect-ratio: 4 / 3;
-    min-height: 220px;
+    aspect-ratio: 5 / 4;
+    min-height: 0;               /* remove 220px floor */
   }
 
   .event-card-body {
-    padding: 1.15rem;
+    padding: 1.1rem 1.1rem 1.2rem;
+    flex-grow: 0;                /* don't stretch — content-sized */
+  }
+
+  .event-card-date {
+    font-size: 0.68rem;
+    margin-bottom: 0.55rem;
   }
 
   .event-card h3 {
-    font-size: 1.15rem;
-    margin-bottom: 0.65rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.18;
   }
 
   .event-card p {
-    font-size: 0.92rem;
-    line-height: 1.55;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex-grow: 0;                /* don't stretch — kills empty space */
   }
 
   .event-card-link {
-    margin-top: 1rem;
+    margin-top: 0.85rem;
+    font-size: 0.85rem;
   }
 
-  /* ----------------------------------------------------------
-     Committees — compact swipe cards
-     ---------------------------------------------------------- */
+
+  /* ==========================================================
+     COMMITTEES — premium vertical stack
+     ----------------------------------------------------------
+     Was a horizontal swipe, which broke with content-heavy cards:
+     align-items:stretch on the swipe imposed a fixed height, and
+     the inner grid's align-content:normal then stretched the rows
+     (152px icon row for a 52px icon — that was the visible bug).
+     Solution: vertical stack + flex column inside the card.
+     ========================================================== */
 
   .committee-list {
+    /* override the prior swipe declaration */
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 84%;
-
-    overflow-x: auto;
-
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
     gap: 1rem;
 
-    padding-right: var(--gutter);
-    padding-bottom: 0.5rem;
+    overflow: visible;
+    padding-right: 0;
+    padding-bottom: 0;
 
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: none;
   }
 
-  .committee-list::-webkit-scrollbar {
-    display: none;
-  }
-
-  .committee-list::after {
-    content: "";
-    width: 0.5rem;
-  }
+  .committee-list::after { content: none; }
 
   .committee {
-    scroll-snap-align: start;
+    display: flex;               /* flex avoids the grid stretch bug */
+    flex-direction: column;
+    gap: 0.85rem;
 
-    grid-template-columns: 1fr;
-
-    gap: 1.1rem;
-
-    padding: 1.4rem;
-
+    padding: 1.3rem;
     border-radius: 18px;
-
     min-height: auto;
+
+    scroll-snap-align: none;
   }
 
-  .committee-icon {
-    width: 52px;
-    height: 52px;
-    font-size: 1.4rem;
+  /* Header row: icon + title inline */
+  .committee > .committee-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    align-self: flex-start;
+  }
+
+  /* The content div (2nd child) — becomes a flex column itself */
+  .committee > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .committee .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
   }
 
   .committee h3 {
-    margin-bottom: 0.6rem;
+    margin: 0 !important;        /* override inline margin-top:0.5rem */
     font-size: 1.2rem;
+    line-height: 1.18;
   }
 
   .committee p {
-    font-size: 0.94rem;
+    margin: 0;
+    font-size: 0.93rem;
     line-height: 1.55;
   }
 
+  .committee strong {
+    display: block;
+    margin: 0.4rem 0 0 !important;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    font-weight: 700;
+  }
+
   .committee ul {
-    margin-top: 0.75rem;
+    margin: 0.15rem 0 0;
   }
 
   .committee ul li {
-    padding-top: 0.28rem;
-    padding-bottom: 0.28rem;
-
+    padding: 0.22rem 0 0.22rem 1.1rem;
     font-size: 0.88rem;
     line-height: 1.45;
   }
 
-  /* ----------------------------------------------------------
-     Values grid — compact 2-column layout
-     ---------------------------------------------------------- */
+  .committee ul li::before {
+    top: 0.85rem;
+    width: 7px;
+  }
+
+
+  /* ==========================================================
+     VALUES GRID — 2-col compact (down to 320px)
+     ----------------------------------------------------------
+     Used on: a-propos values, CA, 5 reasons (benevoles), etc.
+     ========================================================== */
 
   .values-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.75rem;
+  }
+
+  /* If the last card is alone on its row (odd count), span both columns
+     so the layout doesn't end on a half-width orphan. */
+  .values-grid > .value:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   .value {
-    padding: 1.1rem;
-    border-radius: 18px;
+    padding: 1.1rem 0.95rem;
+    border-radius: 16px;
+  }
+
+  .value:hover { transform: none; }
+
+  .value-emoji {
+    font-size: 1.4rem;
+    margin-bottom: 0.6rem;
   }
 
   .value h3 {
     font-size: 1rem;
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
   }
 
   .value p {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     line-height: 1.45;
   }
 
-  .value-emoji {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
 
-  /* ----------------------------------------------------------
-     Social cards
-     ---------------------------------------------------------- */
+  /* ==========================================================
+     SOCIAL CARDS (contact page) — 3-col compact chips
+     ----------------------------------------------------------
+     Hide the handle line on mobile so cards stay tight.
+     ========================================================== */
 
   .socials-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
   }
 
   .social-card {
-    padding: 1.4rem 1rem;
-    border-radius: 18px;
+    padding: 1rem 0.4rem;
+    border-radius: 14px;
+  }
+
+  .social-card:hover { transform: none; }
+
+  .social-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.55rem;
   }
 
   .social-name {
-    font-size: 1.05rem;
+    font-size: 0.9rem;
+    margin-bottom: 0;
   }
 
   .social-link {
-    font-size: 0.8rem;
+    display: none;               /* hide handle — cards stay compact */
   }
 
-  /* ----------------------------------------------------------
-     Contact options
-     ---------------------------------------------------------- */
+
+  /* ==========================================================
+     CONTACT OPTIONS — same 3-col compact treatment
+     ========================================================== */
 
   .contact-options {
-    gap: 0.9rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
   }
 
   .contact-option {
-    padding: 1.4rem 1rem;
+    padding: 1rem 0.4rem;
   }
 
-  /* ----------------------------------------------------------
-     Footer compression
-     ---------------------------------------------------------- */
-
-  .footer {
-    padding: 3rem 0 1.5rem;
+  .contact-option-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
   }
 
-  .footer-grid {
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .footer h4 {
-    margin-bottom: 0.9rem;
-  }
-
-  .footer ul li {
-    margin-bottom: 0.45rem;
-  }
-
-  .footer-brand p {
+  .contact-option-label {
     font-size: 0.9rem;
   }
 
+  .contact-option-handle {
+    display: none;
+  }
+
+
+  /* ==========================================================
+     FOOTER — premium compact
+     ----------------------------------------------------------
+     Brand spans both columns. Then a 2-col nav grid.
+     Social column becomes a horizontal icon row at the bottom.
+     ========================================================== */
+
+  .footer {
+    padding: 2.5rem 0 1.25rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Brand block: full width at the top */
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-brand p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-top: 0.75rem;
+    max-width: 100%;
+  }
+
+  /* Réseaux block: full width as icon row */
+  .footer-social {
+    grid-column: 1 / -1;
+  }
+
+  .footer h4 {
+    margin-bottom: 0.7rem;
+    font-size: 0.74rem;
+  }
+
+  .footer ul li {
+    margin-bottom: 0.4rem;
+  }
+
+  .footer ul a {
+    font-size: 0.9rem;
+  }
+
+  /* The social column's <ul> turns into a horizontal icon row */
+  .footer-social ul {
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-social ul li {
+    margin: 0;
+  }
+
+  .footer-social ul a {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(250, 246, 240, 0.08);
+    border: 1px solid rgba(250, 246, 240, 0.1);
+    color: rgba(250, 246, 240, 0.85);
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .footer-social ul a:hover {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--cream);
+  }
+
+  /* Hide the text label on mobile — icon-only row */
+  .footer-social ul a > span { display: none; }
+
+  /* Show the icon (which is hidden on desktop — see section 17 override) */
+  .footer-social ul a > .icon {
+    display: inline-block;
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
   .footer-bottom {
-    padding-top: 1.5rem;
-
+    padding-top: 1.25rem;
     flex-direction: column;
-
-    gap: 0.5rem;
+    gap: 0.35rem;
+    font-size: 0.78rem;
   }
 }
 
-/* --------------------------------------------------------------
-   Very small phones
-   -------------------------------------------------------------- */
 
-@media (max-width: 420px) {
+/* ==========================================================================
+   Very small phones — fine adjustments
+   ========================================================================== */
 
-  .events-grid {
-    grid-auto-columns: 86%;
-  }
+@media (max-width: 380px) {
 
-  .committee-list {
-    grid-auto-columns: 90%;
-  }
+  .events-grid { grid-auto-columns: 88%; }
+
+  /* Slightly tighter committee padding on small screens */
+  .committee { padding: 1.15rem; }
+}
+
+/* On truly tiny screens (e.g. < 320px), drop 2-col grids to 1-col */
+@media (max-width: 320px) {
 
   .values-grid,
-  .socials-grid {
+  .socials-grid,
+  .contact-options {
     grid-template-columns: 1fr;
   }
 }

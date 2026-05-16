@@ -239,12 +239,12 @@ class BicFooter extends HTMLElement {
           <li><a href="${PAGES.membership[lang]}">${esc(t.footer.membershipLabel)}</a></li>
         </ul>
       </div>
-      <div>
+      <div class="footer-social">
         <h4>${esc(t.footer.socialTitle)}</h4>
         <ul>
-          <li><a href="${SOCIAL.facebook}" target="_blank" rel="noopener">Facebook</a></li>
-          <li><a href="${SOCIAL.instagram}" target="_blank" rel="noopener">Instagram</a></li>
-          <li><a href="${SOCIAL.tiktok}" target="_blank" rel="noopener">TikTok</a></li>
+          <li><a href="${SOCIAL.facebook}" target="_blank" rel="noopener" aria-label="Facebook"><i class="icon icon-facebook" aria-hidden="true"></i><span>Facebook</span></a></li>
+          <li><a href="${SOCIAL.instagram}" target="_blank" rel="noopener" aria-label="Instagram"><i class="icon icon-instagram" aria-hidden="true"></i><span>Instagram</span></a></li>
+          <li><a href="${SOCIAL.tiktok}" target="_blank" rel="noopener" aria-label="TikTok"><i class="icon icon-music" aria-hidden="true"></i><span>TikTok</span></a></li>
         </ul>
       </div>
     </div>
