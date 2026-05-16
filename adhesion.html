@@ -71,7 +71,7 @@
         </div>
 
         <!-- Iframe cachée par défaut, chargée seulement au clic -->
-        <div class="form-iframe-wrap" id="form-iframe-wrap" hidden>
+        <div class="form-iframe-wrap" id="form-iframe-wrap">
           <iframe
             id="form-iframe"
             data-src="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?embedded=true"
@@ -91,35 +91,34 @@
 
   <!-- Script léger pour révéler l'iframe au clic du bouton -->
   <script>
-  (function() {
-    const btn = document.getElementById('form-start-btn');
-    const intro = document.getElementById('form-intro');
-    const wrap = document.getElementById('form-iframe-wrap');
-    const iframe = document.getElementById('form-iframe');
-  
-    if (!btn || !intro || !wrap || !iframe) return;
-  
-    btn.addEventListener('click', () => {
-  
-      // lazy load iframe
-      if (!iframe.src && iframe.dataset.src) {
-        iframe.src = iframe.dataset.src;
-      }
-  
-      // hide intro
-      intro.style.display = 'none';
-  
-      // show iframe
-      wrap.hidden = false;
-      wrap.style.display = 'block';
-  
-      // smooth scroll
-      wrap.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+    (function() {
+      const btn = document.getElementById('form-start-btn');
+      const intro = document.getElementById('form-intro');
+      const wrap = document.getElementById('form-iframe-wrap');
+      const iframe = document.getElementById('form-iframe');
+    
+      if (!btn || !intro || !wrap || !iframe) return;
+    
+      btn.addEventListener('click', () => {
+    
+        // lazy load iframe
+        if (!iframe.src && iframe.dataset.src) {
+          iframe.src = iframe.dataset.src;
+        }
+    
+        // hide intro
+        intro.style.display = 'none';
+    
+        // show iframe
+        wrap.style.display = 'block';
+    
+        // smooth scroll
+        wrap.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       });
-    });
-  })();
+    })();
   </script>
 </body>
 </html>
