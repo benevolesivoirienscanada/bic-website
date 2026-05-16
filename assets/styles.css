@@ -1350,6 +1350,13 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
 }
 
 /* Wrap qui héberge l'iframe une fois révélée */
+.form-iframe-wrap {
+  display: none;
+  width: 100%;
+  min-height: 1400px;
+  background: var(--white);
+}
+
 .form-iframe-wrap iframe {
   display: block;
   width: 100%;
