@@ -95,9 +95,15 @@
       if (!btn || !intro || !wrap || !iframe) return;
       btn.addEventListener('click', function() {
         // Load the form only now (lazy)
-        if (!iframe.src && iframe.dataset.src) iframe.src = iframe.dataset.src;
-        intro.hidden = true;
+        btn.addEventListener('click', () => {
+        if (!iframe.src && iframe.dataset.src) {
+          iframe.src = iframe.dataset.src;
+        }
+  
+        intro.style.display = 'none';
+        
         wrap.hidden = false;
+        wrap.style.display = 'block';
         // Smooth scroll to iframe (useful on mobile)
         wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
