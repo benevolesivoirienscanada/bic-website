@@ -19,7 +19,7 @@
    ============================================================ */
 
 // Liens sociaux — un seul endroit à mettre à jour
-const SOCIAL = {
+window.SOCIAL = {
   facebook: 'https://www.facebook.com/p/B%C3%A9n%C3%A9voles-Ivoiriens-du-Canada-BIC-100091865238462/',
   instagram: 'https://www.instagram.com/benevolesivoirienscanada/',
   tiktok: 'https://www.tiktok.com/@benevolesivoirienscanada',
