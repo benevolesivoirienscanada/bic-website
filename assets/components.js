@@ -18,13 +18,6 @@
    CONFIG — la seule place où vous modifiez quoi que ce soit
    ============================================================ */
 
-// Liens sociaux — un seul endroit à mettre à jour
-window.SOCIAL = {
-  facebook: 'https://www.facebook.com/p/B%C3%A9n%C3%A9voles-Ivoiriens-du-Canada-BIC-100091865238462/',
-  instagram: 'https://www.instagram.com/benevolesivoirienscanada/',
-  tiktok: 'https://www.tiktok.com/@benevolesivoirienscanada',
-};
-
 // Liens externes (le formulaire d'adhésion est désormais intégré sur une page locale)
 const LINKS = {
   donate: 'https://www.zeffy.com/fr-CA/ticketing/cotisation-annuelle-2026-2027-benevoles-ivoiriens-du-canada-bic',
