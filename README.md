@@ -236,6 +236,44 @@ Pour remplacer les emojis temporaires des cartes d'événements par de vraies ph
 
 ---
 
+## 🖼️ Image Open Graph (aperçu des liens)
+
+Le site utilise une image Open Graph (OG image) pour les aperçus lorsqu'un lien est partagé sur WhatsApp, Facebook, LinkedIn, iMessage, Discord, etc.
+
+### Emplacement
+
+```txt
+assets/images/og-image.png
+```
+
+### Spécifications recommandées
+
+* Format : PNG (préféré pour les logos et textes)
+* Dimensions : `1200 × 630 px`
+* Taille idéale : `< 300 KB`
+
+⚠️ Évitez WebP pour l'OG image : certains crawlers sociaux ne le supportent pas correctement.
+
+### Métadonnées HTML
+
+Les balises Open Graph et Twitter fallback sont définies directement dans toutes les pages HTML FR et EN :
+
+```html
+<meta property="og:image" content="https://benevolesivoirienscanada.com/assets/images/og-image.png">
+<meta name="twitter:image" content="https://benevolesivoirienscanada.com/assets/images/og-image.png">
+```
+
+### Rafraîchir les aperçus après un changement
+
+Les plateformes sociales gardent souvent une copie en cache de l'ancienne image. Après mise à jour :
+
+1. Déployez le site
+2. Ouvrez :
+   https://developers.facebook.com/tools/debug/
+3. Cliquez sur **Scrape Again**
+
+---
+
 ## 🛠️ Développement local
 
 Pour tester le site en local avec un serveur HTTP (recommandé pour que les chemins absolus comme `/assets/...` fonctionnent) :
