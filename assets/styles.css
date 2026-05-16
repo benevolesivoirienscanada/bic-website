@@ -1721,6 +1721,12 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
      ----------------------------------------------------------
      Image less tall (5/4 instead of 4/3), cards size to content
      instead of stretching to the tallest peer.
+
+     Snap behavior: cards snap to CENTER, not to start. Combined
+     with symmetric horizontal padding, this ensures a peek of
+     the previous/next card is ALWAYS visible — so the last card
+     still feels like it's part of a stack (peek of the prior
+     card behind it on the left). App Store / Apple Music feel.
      ========================================================== */
 
   .events-grid {
@@ -1732,21 +1738,40 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
     overflow-x: auto;
     gap: 0.85rem;
 
+    /* Break out of .container's gutter so the carousel can
+       touch the screen edges. Inner padding then defines the
+       resting position and peek depth. */
+    margin-left: calc(var(--gutter) * -1);
+    margin-right: calc(var(--gutter) * -1);
+
+    /* Symmetric inset — the carousel "breathes" inside the
+       page gutter, and the snap point pins the active card here. */
+    padding-left: var(--gutter);
     padding-right: var(--gutter);
     padding-bottom: 0.5rem;
 
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
 
-    align-items: start;          /* don't stretch — kills empty space */
+    /* Phantom scroll-padding so the snap point aligns with the
+       padded edge, not the raw scroll-container edge. Without
+       this the first card snaps awkwardly. */
+    scroll-padding-left: var(--gutter);
+    scroll-padding-right: var(--gutter);
+
+    align-items: start;
   }
 
   .events-grid::-webkit-scrollbar { display: none; }
-  .events-grid::after { content: ""; width: 0.5rem; }
+  /* No trailing spacer needed — the right padding handles end peek. */
+  .events-grid::after { content: none; }
 
   .event-card {
+    /* Snap to start of the card aligned with the scroll-padding
+       inset — net effect at mid-carousel: card centered with
+       equal peek either side. At ends: peek only on the inner side. */
     scroll-snap-align: start;
-    height: auto;                /* override desktop 100% */
+    height: auto;
     border-radius: 18px;
     min-height: auto;
   }
