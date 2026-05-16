@@ -104,8 +104,10 @@
           iframe.src = iframe.dataset.src;
         }
   
-        intro.hidden = true;
+        intro.style.display = 'none';
+        
         wrap.hidden = false;
+        wrap.style.display = 'block';
   
         wrap.scrollIntoView({
           behavior: 'smooth',
