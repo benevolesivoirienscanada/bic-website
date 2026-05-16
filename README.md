@@ -133,6 +133,17 @@ Le fichier `_headers` à la racine du repo contrôle les en-têtes HTTP envoyés
 
 ⚠️ **Important** : si vous configurez Cloudflare zone-level "Browser Cache TTL", mettez-le sur **"Respect Existing Headers"** — sinon le `_headers` est ignoré.
 
+En plus du cache HTTP, `_headers` configure également plusieurs en-têtes de sécurité modernes :
+
+* `Content-Security-Policy` (CSP)
+* `X-Frame-Options`
+* `Referrer-Policy`
+* `Permissions-Policy`
+* `X-Content-Type-Options`
+
+Ces protections sont appliquées globalement à toutes les pages du site via Cloudflare Workers.
+
+
 ### Branches de preview
 
 Toute branche autre que `main` est déployée sur une URL de preview du genre `<branche>-bic-website.<compte>.workers.dev`. Pratique pour tester un changement avant de fusionner sur `main`.
@@ -233,6 +244,44 @@ Pour remplacer les emojis temporaires des cartes d'événements par de vraies ph
        style="width: 100%; height: 100%; object-fit: cover;">
 </div>
 ```
+
+---
+
+## 🖼️ Image Open Graph (aperçu des liens)
+
+Le site utilise une image Open Graph (OG image) pour les aperçus lorsqu'un lien est partagé sur WhatsApp, Facebook, LinkedIn, iMessage, Discord, etc.
+
+### Emplacement
+
+```txt
+assets/images/og-image.png
+```
+
+### Spécifications recommandées
+
+* Format : PNG (préféré pour les logos et textes)
+* Dimensions : `1200 × 630 px`
+* Taille idéale : `< 300 KB`
+
+⚠️ Évitez WebP pour l'OG image : certains crawlers sociaux ne le supportent pas correctement.
+
+### Métadonnées HTML
+
+Les balises Open Graph et Twitter fallback sont définies directement dans toutes les pages HTML FR et EN :
+
+```html
+<meta property="og:image" content="https://benevolesivoirienscanada.com/assets/images/og-image.png">
+<meta name="twitter:image" content="https://benevolesivoirienscanada.com/assets/images/og-image.png">
+```
+
+### Rafraîchir les aperçus après un changement
+
+Les plateformes sociales gardent souvent une copie en cache de l'ancienne image. Après mise à jour :
+
+1. Déployez le site
+2. Ouvrez :
+   https://developers.facebook.com/tools/debug/
+3. Cliquez sur **Scrape Again**
 
 ---
 
