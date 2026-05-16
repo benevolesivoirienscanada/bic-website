@@ -71,7 +71,7 @@
         </div>
 
         <!-- Iframe cachée par défaut, chargée seulement au clic -->
-        <div class="form-iframe-wrap" id="form-iframe-wrap" hidden>
+        <div class="form-iframe-wrap" id="form-iframe-wrap">
           <iframe
             id="form-iframe"
             data-src="https://docs.google.com/forms/d/e/1FAIpQLSeyP3Xbd5FzhOpRIKziCccbdvLP6KICEwFavPIlwAEpana7tA/viewform?embedded=true"
@@ -89,32 +89,8 @@
 
   <script src="assets/components.js" defer></script>
 
-  <!-- Script léger pour révéler l'iframe au clic du bouton -->
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('form-start-btn');
-      const intro = document.getElementById('form-intro');
-      const wrap = document.getElementById('form-iframe-wrap');
-      const iframe = document.getElementById('form-iframe');
-  
-      if (!btn || !intro || !wrap || !iframe) return;
-  
-      btn.addEventListener('click', () => {
-        if (!iframe.src && iframe.dataset.src) {
-          iframe.src = iframe.dataset.src;
-        }
-  
-        intro.style.display = 'none';
-        
-        wrap.hidden = false;
-        wrap.style.display = 'block';
-  
-        wrap.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      });
-    });
-  </script>
+  <!-- Reveals the iframe on button click. Externalized (rather than inline)
+       so it passes the strict CSP defined in _headers (script-src 'self'). -->
+  <script src="assets/form-embed.js" defer></script>
 </body>
 </html>
