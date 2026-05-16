@@ -1928,31 +1928,38 @@ section { padding: clamp(4rem, 9vw, 7rem) 0; }
      Hide the handle line on mobile so cards stay tight.
      ========================================================== */
 
-  .socials-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.6rem;
-  }
+  @media (max-width: 640px) {
 
-  .social-card {
-    padding: 1rem 0.4rem;
-    border-radius: 14px;
-  }
+     .socials-grid {
+       display: grid;
+       grid-template-columns: repeat(3, 1fr);
+       gap: 0.6rem;
+     }
+   
+     .social-card {
+       padding: 1rem 0.4rem;
+       border-radius: 14px;
+     }
+   
+     .social-card:hover {
+       transform: none;
+     }
+   
+     .social-icon {
+       font-size: 1.5rem;
+       margin-bottom: 0.55rem;
+     }
+   
+     .social-name {
+       font-size: 0.9rem;
+       margin-bottom: 0;
+     }
+   
+     .social-link {
+       display: none;
+     }
+   }
 
-  .social-card:hover { transform: none; }
-
-  .social-icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.55rem;
-  }
-
-  .social-name {
-    font-size: 0.9rem;
-    margin-bottom: 0;
-  }
-
-  .social-link {
-    display: none;               /* hide handle — cards stay compact */
-  }
 
 
   /* ==========================================================
