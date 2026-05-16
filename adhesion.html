@@ -84,28 +84,35 @@
     </div>
   </section>
 
-  <!-- Script léger pour révéler l'iframe au clic du bouton -->
-  <script>
-    (function() {
-      const btn = document.getElementById('form-start-btn');
-      const intro = document.getElementById('form-intro');
-      const wrap = document.getElementById('form-iframe-wrap');
-      const iframe = document.getElementById('form-iframe');
-      if (!btn || !intro || !wrap || !iframe) return;
-      btn.addEventListener('click', function() {
-        // Charge le formulaire seulement maintenant (lazy)
-        if (!iframe.src && iframe.dataset.src) iframe.src = iframe.dataset.src;
-        intro.hidden = true;
-        wrap.hidden = false;
-        // Scrolle doucement vers l'iframe (utile sur mobile)
-        wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    })();
-  </script>
-
   <!-- FOOTER -->
   <bic-footer lang="fr"></bic-footer>
 
   <script src="assets/components.js" defer></script>
+
+  <!-- Script léger pour révéler l'iframe au clic du bouton -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('form-start-btn');
+      const intro = document.getElementById('form-intro');
+      const wrap = document.getElementById('form-iframe-wrap');
+      const iframe = document.getElementById('form-iframe');
+  
+      if (!btn || !intro || !wrap || !iframe) return;
+  
+      btn.addEventListener('click', () => {
+        if (!iframe.src && iframe.dataset.src) {
+          iframe.src = iframe.dataset.src;
+        }
+  
+        intro.hidden = true;
+        wrap.hidden = false;
+  
+        wrap.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      });
+    });
+  </script>
 </body>
 </html>
