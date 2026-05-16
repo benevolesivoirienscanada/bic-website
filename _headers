@@ -48,9 +48,28 @@
 # ──────────────────────────────────────────────────────────────
 # Bonus sécurité — en-têtes appliqués à toutes les pages
 # ──────────────────────────────────────────────────────────────
+# CSP (Content-Security-Policy) — politique de sources autorisées.
+# Chaque directive ne s'applique qu'à un type de ressource :
+#   style-src  : feuilles CSS (<link> et <style>)
+#   font-src   : fichiers de police (.woff2 etc.)
+#   script-src : scripts JS
+#   frame-src  : iframes (page d'adhésion → Google Forms)
+#   img-src    : images
+#   form-action: cibles des <form action="...">
+#   connect-src: requêtes fetch/XHR/WebSocket (non utilisé ici)
+#
+# Sources externes autorisées :
+#   • fonts.googleapis.com → feuille de style Google Fonts (Fraunces, Manrope)
+#   • fonts.gstatic.com    → fichiers de police chargés par cette feuille
+#   • docs.google.com      → iframe du formulaire d'adhésion Google Forms
+#
+# IMPORTANT — `script-src 'self'` sans 'unsafe-inline' :
+# tous les scripts doivent être externalisés (pas de <script>...</script>
+# inline dans le HTML). Le handler du bouton d'adhésion vit dans
+# assets/form-embed.js pour cette raison.
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
-  Content-Security-Policy: default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; form-action 'self';
+  Content-Security-Policy: default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://docs.google.com; form-action 'self';
