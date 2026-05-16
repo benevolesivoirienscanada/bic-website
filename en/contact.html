@@ -72,8 +72,28 @@
         <h2>More ways to <span class="italic-accent" style="color: var(--teal-deep);">reach us</span>.</h2>
       </div>
 
-      <div class="socials-grid" id="socials-grid">
-        <!-- Social cards will be generated here -->
+      <div class="socials-grid values-grid" id="socials-grid">
+        <a href="https://www.facebook.com/p/B%C3%A9n%C3%A9voles-Ivoiriens-du-Canada-BIC-100091865238462/" target="_blank" rel="noopener" class="social-card" aria-label="Facebook">
+          <div class="social-icon">
+            <i class="icon icon-facebook icon-xl" aria-hidden="true"></i>
+          </div>
+          <div class="social-name">Facebook</div>
+          <div class="social-link">@benevolesivoirienscanada</div>
+        </a>
+        <a href="https://www.instagram.com/benevolesivoirienscanada/" target="_blank" rel="noopener" class="social-card" aria-label="Instagram">
+          <div class="social-icon">
+            <i class="icon icon-instagram icon-xl" aria-hidden="true"></i>
+          </div>
+          <div class="social-name">Instagram</div>
+          <div class="social-link">@benevolesivoirienscanada</div>
+        </a>
+        <a href="https://www.tiktok.com/@benevolesivoirienscanada" target="_blank" rel="noopener" class="social-card" aria-label="TikTok">
+          <div class="social-icon">
+            <i class="icon icon-music icon-xl" aria-hidden="true"></i>
+          </div>
+          <div class="social-name">TikTok</div>
+          <div class="social-link">@benevolesivoirienscanada</div>
+        </a>
       </div>
     </div>
   </section>
@@ -81,32 +101,6 @@
   <!-- FOOTER -->
   <bic-footer lang="en"></bic-footer>
 
-  <!-- COMPONENTS JS -->
   <script src="../assets/components.js" defer></script>
-
-  <!-- SOCIALS GENERATION -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const grid = document.getElementById('socials-grid');
-
-      const SOCIAL_INFO = {
-        facebook: { icon: 'facebook', display: 'Facebook', handle: 'Ivorian Volunteers of Canada' },
-        instagram: { icon: 'instagram', display: 'Instagram', handle: '@benevolesivoirienscanada' },
-        tiktok: { icon: 'music', display: 'TikTok', handle: '@benevolesivoirienscanada' }
-      };
-
-      grid.innerHTML = Object.entries(SOCIAL).map(([key, url]) => {
-        const info = SOCIAL_INFO[key] || { icon: 'globe', display: key, handle: '' };
-        return `
-          <a href="${url}" target="_blank" rel="noopener" class="social-card">
-            <div class="social-icon"><i class="icon icon-${info.icon} icon-xl" aria-hidden="true"></i></div>
-            <div class="social-name">${info.display}</div>
-            <div class="social-link">${info.handle} →</div>
-          </a>
-        `;
-      }).join('');
-    });
-  </script>
-
 </body>
 </html>
