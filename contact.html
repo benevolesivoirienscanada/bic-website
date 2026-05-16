@@ -93,7 +93,7 @@
         tiktok: { icon: 'music', display: 'TikTok', handle: '@benevolesivoirienscanada' }
       };
 
-      grid.innerHTML = Object.entries(SOCIAL).map(([key, url]) => {
+      grid.innerHTML = Object.entries(window.SOCIAL).map(([key, url]) => {
         const info = SOCIAL_INFO[key] || { icon: 'globe', display: key, handle: '' };
         return `
           <a href="${url}" target="_blank" rel="noopener" class="social-card">
