@@ -85,40 +85,13 @@
     </div>
   </section>
 
-  <!-- Lightweight script to reveal iframe on button click -->
-  <script>
-    (function() {
-      const btn = document.getElementById('form-start-btn');
-      const intro = document.getElementById('form-intro');
-      const wrap = document.getElementById('form-iframe-wrap');
-      const iframe = document.getElementById('form-iframe');
-    
-      if (!btn || !intro || !wrap || !iframe) return;
-    
-      btn.addEventListener('click', () => {
-    
-        // lazy load iframe
-        if (!iframe.src && iframe.dataset.src) {
-          iframe.src = iframe.dataset.src;
-        }
-    
-        // hide intro
-        intro.style.display = 'none';
-    
-        // show iframe
-        wrap.style.display = 'block';
-    
-        // smooth scroll
-        wrap.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      });
-    })();
-  </script>
   <!-- FOOTER -->
   <bic-footer lang="en"></bic-footer>
 
   <script src="../assets/components.js" defer></script>
+
+  <!-- Reveals the iframe on button click. Externalized (rather than inline)
+       so it passes the strict CSP defined in _headers (script-src 'self'). -->
+  <script src="../assets/form-embed.js" defer></script>
 </body>
 </html>
