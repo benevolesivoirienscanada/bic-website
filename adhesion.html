@@ -91,30 +91,35 @@
 
   <!-- Script léger pour révéler l'iframe au clic du bouton -->
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('form-start-btn');
-      const intro = document.getElementById('form-intro');
-      const wrap = document.getElementById('form-iframe-wrap');
-      const iframe = document.getElementById('form-iframe');
+  (function() {
+    const btn = document.getElementById('form-start-btn');
+    const intro = document.getElementById('form-intro');
+    const wrap = document.getElementById('form-iframe-wrap');
+    const iframe = document.getElementById('form-iframe');
   
-      if (!btn || !intro || !wrap || !iframe) return;
+    if (!btn || !intro || !wrap || !iframe) return;
   
-      btn.addEventListener('click', () => {
-        if (!iframe.src && iframe.dataset.src) {
-          iframe.src = iframe.dataset.src;
-        }
+    btn.addEventListener('click', () => {
   
-        intro.style.display = 'none';
-        
-        wrap.hidden = false;
-        wrap.style.display = 'block';
+      // lazy load iframe
+      if (!iframe.src && iframe.dataset.src) {
+        iframe.src = iframe.dataset.src;
+      }
   
-        wrap.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+      // hide intro
+      intro.style.display = 'none';
+  
+      // show iframe
+      wrap.hidden = false;
+      wrap.style.display = 'block';
+  
+      // smooth scroll
+      wrap.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
       });
     });
+  })();
   </script>
 </body>
 </html>
