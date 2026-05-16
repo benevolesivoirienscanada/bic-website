@@ -244,6 +244,7 @@ Pour remplacer les emojis temporaires des cartes d'événements par de vraies ph
        style="width: 100%; height: 100%; object-fit: cover;">
 </div>
 ```
+Pour convertir et optmiser les images : https://squoosh.app/
 
 ---
 
