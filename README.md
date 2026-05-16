@@ -133,6 +133,17 @@ Le fichier `_headers` à la racine du repo contrôle les en-têtes HTTP envoyés
 
 ⚠️ **Important** : si vous configurez Cloudflare zone-level "Browser Cache TTL", mettez-le sur **"Respect Existing Headers"** — sinon le `_headers` est ignoré.
 
+En plus du cache HTTP, `_headers` configure également plusieurs en-têtes de sécurité modernes :
+
+* `Content-Security-Policy` (CSP)
+* `X-Frame-Options`
+* `Referrer-Policy`
+* `Permissions-Policy`
+* `X-Content-Type-Options`
+
+Ces protections sont appliquées globalement à toutes les pages du site via Cloudflare Workers.
+
+
 ### Branches de preview
 
 Toute branche autre que `main` est déployée sur une URL de preview du genre `<branche>-bic-website.<compte>.workers.dev`. Pratique pour tester un changement avant de fusionner sur `main`.
